@@ -1,49 +1,9 @@
-#include "raylib.h"
-#include "raymath.h"
-#include "stdio.h"
-#include "stdbool.h"
-#include "stdint.h"
-#include "string.h"
 
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 400
-#define RACKET_LENGTH 60
-#define RACKET_THICK 10
-#define BALL_SIZE 20
-#define RACKET_SPEED 6
-#define SPEED_SCALE 2.5
-#define BALL_SPEED 2
-#define OPTIONS_MENU_COUNT 3
-#define ANGLE 50
-#define M_KEY 59
-#define Q_KEY 65
+#include "pong.h"
 
-typedef enum state
-{
-    STATE_MENU = 0,
-    STATE_PLAYING,
-    STATE_DIFFICULTY
-} State;
-
-void game();
-void setUpGame(int startDir);
-void onKeyPressed();
-void drawGame();
-void moveBall();
-void displayMenu();
-void displayDifficulty();
-void drawRayTracing();
-double degToRad(int deg);
-float racketBounce(Rectangle racket, int direction);
-bool isLimitUp(Rectangle r);
-bool isLimitDown(Rectangle r);
-bool isLimitRight(Rectangle r);
-bool isLimitLeft(Rectangle r);
-
-Rectangle racketL, racketR, ball;
 State gameState = STATE_MENU;
-// direction of the ball {.x = speed, .y = angle}
-Vector2 ballVec;
+Player playerL, playerR;
+Ball ball;
 
 char menu[][32] = {
     {"[G]ame"},
@@ -51,15 +11,26 @@ char menu[][32] = {
     {"[D]ifficulty"},
 };
 
+float lerp(float x, float y, float a)
+{
+    return (1.0f - a) * x + a * y;
+}
+
+float damper(float x, float g, float factor)
+{
+    return lerp(x, g, factor);
+}
+
 void pong()
 {
+
     const int screenWidth = SCREEN_WIDTH;
     const int screenHeight = SCREEN_HEIGHT;
     SetConfigFlags(FLAG_WINDOW_HIGHDPI);
     InitWindow(screenWidth, screenHeight, "Pong");
     SetTargetFPS(40);
     setUpGame(1);
-    ballVec.x = BALL_SPEED;
+    ball.direction.x = BALL_SPEED;
     while (!WindowShouldClose())
     {
         BeginDrawing();
@@ -73,34 +44,43 @@ void pong()
 
 void game()
 {
-    onKeyPressed();
+    bool isPressed = onKeyPressed();
     if (gameState == STATE_PLAYING)
     {
-        moveBall(ball);
+        moveBall();
+        movePlayer(&playerR);
+        movePlayer(&playerL);
+        checkWallColision(&playerR);
+        checkWallColision(&playerL);
     }
     drawGame();
 }
 
-void setUpGame(int startDir)
+void setUpGame(int baseAngle)
 {
     int yRacket = SCREEN_HEIGHT / 2 - RACKET_LENGTH / 2;
-    racketL.x = 0;
-    racketL.y = yRacket;
-    racketL.height = RACKET_LENGTH;
-    racketL.width = RACKET_THICK;
 
-    racketR.x = SCREEN_WIDTH - RACKET_THICK;
-    racketR.y = yRacket;
-    racketR.height = RACKET_LENGTH;
-    racketR.width = RACKET_THICK;
+    playerL.racket.x = 5;
+    playerL.racket.y = yRacket;
+    playerL.racket.height = RACKET_LENGTH;
+    playerL.racket.width = RACKET_THICK;
 
-    ball.x = SCREEN_WIDTH / 2 - BALL_SIZE / 2;
-    ball.y = SCREEN_HEIGHT / 2 - BALL_SIZE / 2;
-    ball.height = BALL_SIZE;
-    ball.width = BALL_SIZE;
+    playerL.angle = 0;
+    playerL.speed = 0;
 
-    ballVec.y = GetRandomValue(45, 45 + 90);
-    ballVec.y *= startDir;
+    playerR.racket.x = SCREEN_WIDTH - RACKET_THICK - 5;
+    playerR.racket.y = yRacket;
+    playerR.racket.height = RACKET_LENGTH;
+    playerR.racket.width = RACKET_THICK;
+
+    playerR.angle = 0;
+    playerR.speed = 0;
+
+    ball.center.x = SCREEN_WIDTH / 2 - BALL_SIZE / 2;
+    ball.center.y = SCREEN_HEIGHT / 2 - BALL_SIZE / 2;
+    ball.direction.y = GetRandomValue(0 - baseAngle, 0 + baseAngle);
+    ball.radius = BALL_SIZE / 2;
+
     drawGame();
 }
 
@@ -112,41 +92,71 @@ void drawGame()
         displayDifficulty();
     else
     {
-        DrawRectangleRec(racketL, BLACK);
-        DrawRectangleRec(racketR, BLACK);
-        DrawRectangleRec(ball, BLACK);
-        Vector2 startL = {.x = racketL.x + RACKET_THICK, .y = racketL.y + (RACKET_LENGTH / 2)};
-        drawRayTracing();
+        Rectangle right;
+        Vector2 originRight = {.x = RACKET_THICK / 2, .y = RACKET_LENGTH / 2};
+        right.height = playerR.racket.height;
+        right.width = playerR.racket.width;
+        right.x = playerR.racket.x + RACKET_THICK / 2;
+        right.y = playerR.racket.y + RACKET_LENGTH / 2;
+        DrawRectanglePro(right, originRight, playerR.angle * playerR.direction, BLACK);
+
+        Rectangle left;
+        Vector2 originLeft = {.x = -(RACKET_THICK / 2), .y = (RACKET_LENGTH / 2)};
+        left.height = playerL.racket.height;
+        left.width = playerL.racket.width;
+        left.x = playerL.racket.x - RACKET_THICK / 2;
+        left.y = playerL.racket.y + RACKET_LENGTH / 2;
+        DrawRectanglePro(left, originLeft, playerL.angle * playerL.direction, BLACK);
+
+        DrawCircleV(ball.center, ball.radius, BLACK);
+        // drawRayTracing();
     }
 }
 
-void onKeyPressed()
+bool onKeyPressed()
 {
+
     if (gameState == STATE_PLAYING)
     {
 
         if (IsKeyPressed(KEY_RIGHT) || IsKeyDown(KEY_RIGHT))
         {
-            if (!isLimitUp(racketL))
-                racketL.y -= RACKET_SPEED;
+            if (!isLimitUp(playerL.racket.y))
+                playerL.direction = TOP;
+            else
+                playerL.direction = NONE;
         }
         else if (IsKeyPressed(KEY_LEFT) || IsKeyDown(KEY_LEFT))
         {
-            if (!isLimitDown(racketL))
-                racketL.y += RACKET_SPEED;
+            if (!isLimitDown(playerL.racket.y - RACKET_LENGTH))
+                playerL.direction = BOTTOM;
+            else
+                playerL.direction = NONE;
         }
         else if (IsKeyPressed(KEY_UP) || IsKeyDown(KEY_UP))
         {
-            if (!isLimitUp(racketR))
-                racketR.y -= RACKET_SPEED;
+            if (!isLimitUp(playerR.racket.y))
+                playerR.direction = TOP;
+            else
+                playerR.direction = NONE;
         }
         else if (IsKeyPressed(KEY_DOWN) || IsKeyDown(KEY_DOWN))
         {
-            if (!isLimitDown(racketR))
-                racketR.y += RACKET_SPEED;
+            if (!isLimitDown(playerR.racket.y - RACKET_LENGTH))
+                playerR.direction = BOTTOM;
+            else
+                playerR.direction = NONE;
         }
         else if (IsKeyDown(M_KEY))
+        {
+
             gameState = STATE_MENU;
+        }
+        else
+        {
+            playerR.direction = NONE;
+            playerL.direction = NONE;
+        }
     }
     else if (gameState == STATE_MENU)
     {
@@ -163,12 +173,40 @@ void onKeyPressed()
     {
         if (IsKeyDown(KEY_ONE) || IsKeyDown(KEY_TWO) || IsKeyDown(KEY_THREE))
         {
-            ballVec.x = GetKeyPressed() - KEY_ZERO;
+            ball.direction.x = GetKeyPressed() - KEY_ZERO;
             gameState = STATE_MENU;
         }
         else if (IsKeyDown(Q_KEY))
             gameState = STATE_MENU;
     }
+    return true;
+}
+
+void checkWallColision(Player *player)
+{
+    if (isLimitDown(player->racket.y + RACKET_LENGTH) || isLimitUp(player->racket.y))
+    {
+        player->direction = NONE;
+        player->speed = 0;
+    }
+}
+
+void movePlayer(Player *player)
+{
+    if (player->direction != NONE)
+    {
+
+        player->speed += player->direction;
+        if (player->angle < MAX_ANGLE_RACKET)
+            player->angle += 0.30;
+    }
+    else
+    {
+        player->speed *= FRICTION_SPEED;
+        player->angle *= FRICTION_ANGLE;
+    }
+
+    player->racket.y += player->speed;
 }
 
 void displayDifficulty()
@@ -181,7 +219,7 @@ void displayDifficulty()
     const char *d[] = {"1", "2", "3"};
     for (size_t i = 0; i < 3; i++)
     {
-        DrawText(d[i], x, y, 20, i == (ballVec.x - 1) ? RED : BLACK);
+        DrawText(d[i], x, y, 20, i == (ball.direction.x - 1) ? RED : BLACK);
         y += 20;
     }
 }
@@ -204,7 +242,7 @@ void displayMenu()
 void drawRayTracing()
 {
     // RAY TRACING RACKET LEFT
-    Vector2 startLeft = {.x = racketL.x + RACKET_THICK, .y = racketL.y};
+    Vector2 startLeft = {.x = playerL.racket.x + RACKET_THICK, .y = playerL.racket.y};
     Vector2 endLeftTop = {.y = 0, .x = tan(degToRad(ANGLE)) * startLeft.y};
     Vector2 endLeftBottom = {.y = SCREEN_HEIGHT, .x = (tan(degToRad(180 - ANGLE)) * (SCREEN_HEIGHT - startLeft.y)) * -1};
     DrawLineV(startLeft, endLeftTop, RED);
@@ -212,7 +250,7 @@ void drawRayTracing()
     DrawLineV(startLeft, endLeftBottom, RED);
 
     // RAY TRACING RACKET RIGHT
-    Vector2 startRight = {.x = racketR.x, .y = racketR.y};
+    Vector2 startRight = {.x = playerR.racket.x, .y = playerR.racket.y};
     Vector2 endRightTop = {.y = 0, .x = SCREEN_WIDTH - (tan(degToRad(ANGLE)) * startRight.y)};
     Vector2 endRightBottom = {.y = SCREEN_HEIGHT, .x = SCREEN_WIDTH - ((tan(degToRad(180 - ANGLE)) * (SCREEN_HEIGHT - startRight.y)) * -1)};
     DrawLineV(startRight, endRightTop, RED);
@@ -223,65 +261,77 @@ void drawRayTracing()
 void moveBall()
 {
     double deltaX, deltaY;
-    if (isLimitDown(ball) || isLimitUp(ball))
-    {
-        printf("LIMIT\n");
-        ballVec.y += 90;
-    }
+    if (isLimitDown(ball.center.y + ball.radius) || isLimitUp(ball.center.y - ball.radius))
+        ball.direction.y = -ball.direction.y;
 
-    else if (isLimitLeft(ball) || isLimitRight(ball))
+    else if (isLimitLeft(ball.center.x + ball.radius) || isLimitRight(ball.center.x + ball.radius))
     {
-        setUpGame(isLimitLeft(ball) ? -1 : 1);
+        setUpGame(isLimitLeft(ball.center.x + ball.radius) ? 180 : 0);
         return;
     }
     else
     {
-        if (CheckCollisionRecs(racketR, ball))
-            ballVec.y = racketBounce(racketR, -1);
+        if (CheckCollisionCircleRec(ball.center, ball.radius, playerR.racket))
+        {
+            float bounce = racketBounce(playerR.racket, -1);
+            printf("bounce = %.2f  ||  angle = %.2f \n", bounce, playerR.angle);
+            ball.direction.y = bounce - (playerR.angle);
+        }
 
-        else if (CheckCollisionRecs(racketL, ball))
-            ballVec.y = racketBounce(racketL, 1);
+        else if (CheckCollisionCircleRec(ball.center, ball.radius, playerL.racket))
+        {
+            float bounce = racketBounce(playerL.racket, 1);
+            printf("bounce = %.2f  ||  angle = %.2f\n", bounce, playerL.angle);
+            ball.direction.y = bounce + (playerL.angle);
+        }
     }
 
-    ball.y += (ballVec.x * SPEED_SCALE) * cos(degToRad(ballVec.y));
-    ball.x += (ballVec.x * SPEED_SCALE) * sin(degToRad(ballVec.y));
+    ball.center.y += (ball.direction.x * SPEED_SCALE) * sin(degToRad(ball.direction.y));
+    ball.center.x += (ball.direction.x * SPEED_SCALE) * cos(degToRad(ball.direction.y));
 }
 
 float racketBounce(Rectangle racket, int direction)
 {
-    if (ball.y < (racket.y + RACKET_LENGTH / 2))
+    int angle = 0;
+    if (direction > 0) // vers droite
     {
-        printf("TOP\n");
-        return GetRandomValue(90, 180 - ANGLE) * direction;
+        if ((ball.center.y) < (racket.y + RACKET_LENGTH / 2))
+            return GetRandomValue(360 - ANGLE, 360); // haut-droite
+        else
+            return GetRandomValue(0, ANGLE); // bas-droite
     }
-    else
+    else // vers gauche
     {
-        printf("BOTTOM\n");
-        return GetRandomValue(ANGLE, 90) * direction;
+        if (ball.center.y < (racket.y + RACKET_LENGTH / 2))
+            return GetRandomValue(180, 180 + ANGLE); // haut-gauche
+        else
+            return GetRandomValue(180 - ANGLE, 180); // bas-gauche
     }
 }
 
-bool isLimitUp(Rectangle r)
+bool isLimitUp(int y)
 {
-    return r.y <= 0;
+    return y <= 0;
 }
 
-bool isLimitDown(Rectangle r)
+bool isLimitDown(int y)
 {
-    return (r.y + r.height) >= SCREEN_HEIGHT;
+    return y >= SCREEN_HEIGHT;
 }
 
-bool isLimitRight(Rectangle r)
+bool isLimitRight(int x)
 {
-    return (r.x + r.width) >= SCREEN_WIDTH;
+    return x >= SCREEN_WIDTH;
 }
 
-bool isLimitLeft(Rectangle r)
+bool isLimitLeft(int x)
 {
-    return r.x <= 0;
+    return x <= 0;
 }
 
 double degToRad(int deg)
 {
     return deg * (PI / 180);
 }
+
+// -----------------------------------------------
