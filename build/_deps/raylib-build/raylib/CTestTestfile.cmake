@@ -1,6 +1,6 @@
 # CMake generated Testfile for 
-# Source directory: /home/adrien/games/build/_deps/raylib-src/src
-# Build directory: /home/adrien/games/build/_deps/raylib-build/raylib
+# Source directory: /home/adrien/Bureau/games/build/_deps/raylib-src/src
+# Build directory: /home/adrien/Bureau/games/build/_deps/raylib-build/raylib
 # 
 # This file includes the relevant testing commands required for 
 # testing this directory and lists subdirectories to be tested as well.

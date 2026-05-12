@@ -28,7 +28,8 @@
   },
   "[c]": {
     "editor.defaultFormatter": "ms-vscode.cpptools"
-  }
+  },
+  "C_Cpp.errorSquiggles": "enabled"
 }
 
 // 192.168.88.190 // 222 git

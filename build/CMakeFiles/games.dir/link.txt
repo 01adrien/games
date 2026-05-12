@@ -1,1 +1,0 @@
-/usr/bin/gcc -g -Wl,--dependency-file=CMakeFiles/games.dir/link.d CMakeFiles/games.dir/main.c.o -o games  _deps/raylib-build/raylib/libraylib.a -lpthread /usr/lib/libOpenGL.so /usr/lib/libGLX.so /usr/lib/libGLU.so /usr/lib/librt.a -lm -ldl -lm

@@ -3,9 +3,9 @@
 # No other meaning or use of this file is supported.
 
 method=git
-command=/usr/bin/cmake;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;/home/adrien/games/build/_deps/raylib-subbuild/raylib-populate-prefix/tmp/raylib-populate-gitclone.cmake
-source_dir=/home/adrien/games/build/_deps/raylib-src
-work_dir=/home/adrien/games/build/_deps
+command=/usr/bin/cmake;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;/home/adrien/Bureau/games/build/_deps/raylib-subbuild/raylib-populate-prefix/tmp/raylib-populate-gitclone.cmake
+source_dir=/home/adrien/Bureau/games/build/_deps/raylib-src
+work_dir=/home/adrien/Bureau/games/build/_deps
 repository=https://github.com/raysan5/raylib.git
 remote=origin
 init_submodules=TRUE
