@@ -51,9 +51,7 @@ void gameOfLife()
 
     while (!WindowShouldClose())
     {
-
         BeginDrawing();
-
         ClearBackground(RAYWHITE);
         if (IsKeyPressed(KEY_RIGHT) || IsKeyPressed(KEY_LEFT))
         {
