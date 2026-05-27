@@ -7,9 +7,11 @@
 #include "stdbool.h"
 #include "stdint.h"
 #include "string.h"
+#include "utils.h"
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
+
 #define RACKET_LENGTH 60
 #define RACKET_THICK 10
 #define BALL_SIZE 20
@@ -63,7 +65,6 @@ void moveBall();
 void displayMenu();
 void displayDifficulty();
 void drawRayTracing();
-double degToRad(int deg);
 float racketBounce(Rectangle racket, int direction);
 bool isLimitUp(int y);
 bool isLimitDown(int y);

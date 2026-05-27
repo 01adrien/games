@@ -1,0 +1,197 @@
+EXO 1 — VELOCITY (le mouvement)
+
+VISUEL :
+- écran vide
+- un cercle au centre
+- une flèche rouge qui part du cercle
+
+La flèche :
+- pointe dans la direction du mouvement
+- grandit quand vitesse augmente
+- rétrécit quand vitesse diminue
+
+Le cercle :
+- avance continuellement
+- suit exactement la direction de la flèche
+
+À ressentir :
+- la flèche EST le mouvement
+- longueur = vitesse
+- angle = direction
+
+---------------------------------------------------------------------------
+
+EXO 2 — NORMALIZE (direction pure)
+
+VISUEL :
+- cercle fixe au centre
+- souris libre à l’écran
+
+Tu dessines 2 flèches :
+
+1. vecteur brut
+centre ---------> souris
+
+- longueur change avec distance souris
+- énorme si souris loin
+
+2. vecteur normalisé
+centre ---->
+
+- toujours même taille
+- tourne selon souris
+- garde seulement l’orientation
+
+À ressentir :
+- brut = direction + distance
+- normalisé = direction uniquement
+
+---------------------------------------------------------------------------
+
+EXO 3 — DOT PRODUCT (filtre directionnel)
+
+VISUEL :
+- une ligne fixe (normal)
+- une flèche velocity contrôlable
+
+Exemple :
+normal verticale :
+
+      ↑
+      |
+      |
+
+velocity :
+↗ → ↓ etc
+
+Tu affiches une valeur dot à l’écran.
+
+À observer :
+- velocity parallèle à normal :
+  dot très grand
+
+- velocity perpendiculaire :
+  dot proche de 0
+
+- velocity opposée :
+  dot négatif
+
+À ressentir :
+- le dot mesure combien le mouvement va dans cette direction
+
+---------------------------------------------------------------------------
+
+EXO 4 — PROJECTION (ombre d’un vecteur)
+
+VISUEL :
+- velocity libre
+- normal fixe
+- projection dessinée sur la normal
+
+Exemple :
+
+velocity :
+      ↗
+
+projection :
+      ↑
+
+Tu dois voir :
+- la velocity complète
+- la partie projetée sur la ligne
+- éventuellement le "reste"
+
+À ressentir :
+- projection = ombre du vecteur sur une direction
+- le dot sert à fabriquer cette ombre
+
+---------------------------------------------------------------------------
+
+EXO 5 — REFLECTION (rebond)
+
+VISUEL :
+- une balle qui se déplace
+- un mur simple
+- une normale dessinée sur le mur
+
+Exemple :
+
+       ↑ normal
+-------|------- mur
+
+La balle arrive :
+↘
+
+Puis repart :
+↗
+
+À ressentir :
+- le rebond est symétrique
+- seule la partie dans la normale est inversée
+
+---------------------------------------------------------------------------
+
+EXO 6 — RELATIVE VELOCITY
+
+VISUEL :
+- 2 billes
+- chacune a sa propre velocity
+- une troisième flèche = relative velocity
+
+Cas 1 :
+A --->   ---> B
+
+relative petite
+
+Cas 2 :
+A --->   <--- B
+
+relative énorme
+
+À ressentir :
+- relative velocity mesure le rapprochement réel
+- pas juste la vitesse individuelle
+
+---------------------------------------------------------------------------
+
+EXO 7 — COLLISION SIMPLE (cercles)
+
+VISUEL :
+- 2 cercles
+- déplacement libre
+- ligne entre centres
+
+Quand collision :
+- les cercles se chevauchent
+- overlap visible
+
+Tu dessines :
+- la normale
+- éventuellement la pénétration
+
+À ressentir :
+- collision détectée ≠ corrigée
+- les objets peuvent entrer l’un dans l’autre
+
+---------------------------------------------------------------------------
+
+EXO 8 — COLLISION + IMPULSE (mini billard)
+
+VISUEL :
+- 2 billes complètes
+- velocity visible
+- normale visible lors du choc
+
+Quand collision :
+1. elles se séparent
+2. la vitesse se transfère
+3. rebond naturel
+
+Tu dois voir :
+- overlap disparaître
+- mouvement transmis
+- directions changer proprement
+
+À ressentir :
+- collision = géométrie + mouvement
+- le dot décide combien transférer

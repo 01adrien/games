@@ -5,6 +5,7 @@ cmake_policy(SET CMP0009 NEW)
 # PROJECT_SOURCES at CMakeLists.txt:23 (file)
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "/home/adrien/Bureau/games/src/*.c")
 set(OLD_GLOB
+  "/home/adrien/Bureau/games/src/arkanoid.c"
   "/home/adrien/Bureau/games/src/game-of-life.c"
   "/home/adrien/Bureau/games/src/pong.c"
   )

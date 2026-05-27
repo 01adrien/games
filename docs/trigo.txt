@@ -1,0 +1,179 @@
+
+             270°
+              ↑
+    180° ←         → 0°
+              ↓
+             90°
+
+
+
+===============================
+TRIGONOMETRIE & VECTEURS 2D
+(Game Dev / Raylib)
+===============================
+
+ANGLES
+------
+
+0 rad     = droite
+PI/2      = haut
+PI        = gauche
+3PI/2     = bas
+
+180 deg = PI radians
+
+Conversion :
+rad = deg * DEG2RAD
+
+
+SIN / COS
+----------
+
+Transformer un angle en direction :
+
+x = cos(angle)
+y = sin(angle)
+
+Vector2 dir = {
+    cos(angle),
+    sin(angle)
+};
+
+cos -> axe X
+sin -> axe Y
+
+
+VECTEUR DIRECTION
+-----------------
+
+destination - origine
+
+mouse - player
+= direction du player vers la souris
+
+A - B
+= vecteur allant de B vers A
+
+
+NORMALISATION
+--------------
+
+normalize(v)
+
+Garde uniquement la direction.
+Longueur = 1.
+
+Utilisé pour :
+- directions
+- vitesse
+- tirs
+- collisions
+
+
+POSITIONNEMENT
+---------------
+
+position = origine + direction * distance
+
+Exemple :
+cuePos = ballPos - dir * distance
+
+
+SINUS COMME ANIMATION
+----------------------
+
+sin(t)
+oscille entre :
+-1 -> 1
+
+(sin(t)+1)/2
+oscille entre :
+0 -> 1
+
+
+EXEMPLES
+---------
+
+Alpha pulsant :
+alpha = (sin(t)+1)/2
+
+Cercle qui respire :
+radius = base + sin(t)*amplitude
+
+Objet flottant :
+y = baseY + sin(t)*height
+
+
+DOT PRODUCT
+------------
+
+dot(a,b)
+
+Mesure l'alignement entre 2 vecteurs.
+
+1   = même direction
+0   = perpendiculaires
+-1  = opposés
+
+Angle entre deux vecteurs :
+
+angle = acos(dot(a,b))
+
+
+ATAN2
+------
+
+atan2(y,x)
+
+Transforme une direction en angle.
+
+Très utilisé pour :
+- regarder une cible
+- rotation souris
+- orientation
+
+Exemple :
+
+dir = mouse - player
+angle = atan2(dir.y, dir.x)
+
+
+IMPORTANT
+-----------
+
+sin/cos :
+angle -> direction
+
+atan2 :
+direction -> angle
+
+
+MOUVEMENT DE BASE
+------------------
+
+position += velocity * dt
+velocity += acceleration * dt
+
+
+A RETENIR
+-----------
+
+Les vecteurs représentent :
+- direction
+- vitesse
+- déplacement
+- forces
+
+La trigonométrie sert surtout à :
+- tourner
+- orienter
+- osciller
+- animer
+
+
+| angle | dir.x | dir.y |
+| ----- | ----- | ----- |
+| 0°    | 1     | 0     |
+| 90°   | 0     | 1     |
+| 180°  | -1    | 0     |
+| 270°  | 0     | -1    |

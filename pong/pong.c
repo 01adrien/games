@@ -410,11 +410,6 @@ bool isLimitLeft(int x)
     return x <= 0;
 }
 
-double degToRad(int deg)
-{
-    return deg * (PI / 180);
-}
-
 void rayTraceBall(float side, Vector2 dir, Vector2 start)
 {
     if (side <= 0)

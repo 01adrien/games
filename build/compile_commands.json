@@ -1,21 +1,69 @@
 [
 {
   "directory": "/home/adrien/Bureau/games/build",
-  "command": "/usr/bin/gcc -DASSETS_PATH=\\\"/home/adrien/Bureau/games/assets/\\\" -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/src -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/games.dir/main.c.o -c /home/adrien/Bureau/games/main.c",
-  "file": "/home/adrien/Bureau/games/main.c",
-  "output": "CMakeFiles/games.dir/main.c.o"
+  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/pong -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/pong.dir/pong/main.c.o -c /home/adrien/Bureau/games/pong/main.c",
+  "file": "/home/adrien/Bureau/games/pong/main.c",
+  "output": "CMakeFiles/pong.dir/pong/main.c.o"
 },
 {
   "directory": "/home/adrien/Bureau/games/build",
-  "command": "/usr/bin/gcc -DASSETS_PATH=\\\"/home/adrien/Bureau/games/assets/\\\" -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/src -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/games.dir/src/game-of-life.c.o -c /home/adrien/Bureau/games/src/game-of-life.c",
-  "file": "/home/adrien/Bureau/games/src/game-of-life.c",
-  "output": "CMakeFiles/games.dir/src/game-of-life.c.o"
+  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/pong -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/pong.dir/pong/pong.c.o -c /home/adrien/Bureau/games/pong/pong.c",
+  "file": "/home/adrien/Bureau/games/pong/pong.c",
+  "output": "CMakeFiles/pong.dir/pong/pong.c.o"
 },
 {
   "directory": "/home/adrien/Bureau/games/build",
-  "command": "/usr/bin/gcc -DASSETS_PATH=\\\"/home/adrien/Bureau/games/assets/\\\" -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/src -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/games.dir/src/pong.c.o -c /home/adrien/Bureau/games/src/pong.c",
-  "file": "/home/adrien/Bureau/games/src/pong.c",
-  "output": "CMakeFiles/games.dir/src/pong.c.o"
+  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/pong -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/pong.dir/shared/utils.c.o -c /home/adrien/Bureau/games/shared/utils.c",
+  "file": "/home/adrien/Bureau/games/shared/utils.c",
+  "output": "CMakeFiles/pong.dir/shared/utils.c.o"
+},
+{
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/arkanoid -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/arkanoid.dir/arkanoid/arkanoid.c.o -c /home/adrien/Bureau/games/arkanoid/arkanoid.c",
+  "file": "/home/adrien/Bureau/games/arkanoid/arkanoid.c",
+  "output": "CMakeFiles/arkanoid.dir/arkanoid/arkanoid.c.o"
+},
+{
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/arkanoid -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/arkanoid.dir/shared/utils.c.o -c /home/adrien/Bureau/games/shared/utils.c",
+  "file": "/home/adrien/Bureau/games/shared/utils.c",
+  "output": "CMakeFiles/arkanoid.dir/shared/utils.c.o"
+},
+{
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/pool -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/pool.dir/pool/pool.c.o -c /home/adrien/Bureau/games/pool/pool.c",
+  "file": "/home/adrien/Bureau/games/pool/pool.c",
+  "output": "CMakeFiles/pool.dir/pool/pool.c.o"
+},
+{
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/pool -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/pool.dir/shared/utils.c.o -c /home/adrien/Bureau/games/shared/utils.c",
+  "file": "/home/adrien/Bureau/games/shared/utils.c",
+  "output": "CMakeFiles/pool.dir/shared/utils.c.o"
+},
+{
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/trigo -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/trigo.dir/trigo/trigo.c.o -c /home/adrien/Bureau/games/trigo/trigo.c",
+  "file": "/home/adrien/Bureau/games/trigo/trigo.c",
+  "output": "CMakeFiles/trigo.dir/trigo/trigo.c.o"
+},
+{
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/trigo -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/trigo.dir/shared/utils.c.o -c /home/adrien/Bureau/games/shared/utils.c",
+  "file": "/home/adrien/Bureau/games/shared/utils.c",
+  "output": "CMakeFiles/trigo.dir/shared/utils.c.o"
+},
+{
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/vector -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/vector.dir/vector/vector.c.o -c /home/adrien/Bureau/games/vector/vector.c",
+  "file": "/home/adrien/Bureau/games/vector/vector.c",
+  "output": "CMakeFiles/vector.dir/vector/vector.c.o"
+},
+{
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/vector -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/vector.dir/shared/utils.c.o -c /home/adrien/Bureau/games/shared/utils.c",
+  "file": "/home/adrien/Bureau/games/shared/utils.c",
+  "output": "CMakeFiles/vector.dir/shared/utils.c.o"
 },
 {
   "directory": "/home/adrien/Bureau/games/build",

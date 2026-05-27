@@ -36,7 +36,7 @@ set(number_of_tries 0)
 while(error_code AND number_of_tries LESS 3)
   execute_process(
     COMMAND "/usr/bin/git"
-            clone --no-checkout --progress --config "advice.detachedHead=false" "https://github.com/raysan5/raylib.git" "raylib-src"
+            clone --no-checkout --config "advice.detachedHead=false" "https://github.com/raysan5/raylib.git" "raylib-src"
     WORKING_DIRECTORY "/home/adrien/Bureau/games/build/_deps"
     RESULT_VARIABLE error_code
     ${maybe_show_command}
