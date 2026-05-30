@@ -2,6 +2,9 @@
 /home/adrien/Bureau/games/build/CMakeFiles/arkanoid.dir
 /home/adrien/Bureau/games/build/CMakeFiles/pool.dir
 /home/adrien/Bureau/games/build/CMakeFiles/trigo.dir
+/home/adrien/Bureau/games/build/CMakeFiles/hotreload_plugin.dir
+/home/adrien/Bureau/games/build/CMakeFiles/hotreload.dir
+/home/adrien/Bureau/games/build/CMakeFiles/vector_plugin.dir
 /home/adrien/Bureau/games/build/CMakeFiles/vector.dir
 /home/adrien/Bureau/games/build/CMakeFiles/package.dir
 /home/adrien/Bureau/games/build/CMakeFiles/package_source.dir

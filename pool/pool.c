@@ -131,27 +131,17 @@ void drawCue(Cue cue)
 {
     if (cue.state != CUE_HIT)
     {
-
         float length = cue.length;
-
         Vector2 end = Vector2Add(cue.pos, Vector2Scale(cue.dir, length));
-
-        // Ombre
         DrawLineEx(
             (Vector2){cue.pos.x + 4, cue.pos.y + 4},
             (Vector2){end.x + 4, end.y + 4},
             10,
             Fade(BLACK, 0.25f));
-
-        // Corps principal bois
         DrawLineEx(cue.pos, end, 8, (Color){160, 110, 60, 255});
 
-        // Partie arrière plus foncée
         Vector2 gripStart = Vector2Lerp(cue.pos, end, 0.75f);
-
         DrawLineEx(gripStart, end, 10, (Color){60, 30, 20, 255});
-
-        // Highlight
         DrawLineEx(
             (Vector2){cue.pos.x - 1, cue.pos.y - 1},
             (Vector2){end.x - 1, end.y - 1},
@@ -298,28 +288,6 @@ bool isShooting(Player player)
     return player.cue.state == CUE_SHOOT || player.cue.state == CUE_HIT;
 }
 
-int main(int argc, char const *argv[])
-{
-    SetConfigFlags(FLAG_WINDOW_HIGHDPI);
-    InitWindow(WIDTH, HEIGHT, "Arkanoid");
-    SetTargetFPS(40);
-    setupGame();
-    while (!WindowShouldClose())
-    {
-        BeginDrawing();
-        ClearBackground(RAYWHITE);
-        gameLoop();
-        EndDrawing();
-    }
-    CloseWindow();
-    return 0;
-}
-
-void printVector2(Vector2 v)
-{
-    printf("x = %.2f  |  y = %.2f\n", v.x, v.y);
-}
-
 void checkHitBorder(Ball *ball)
 {
 
@@ -356,42 +324,36 @@ Ball mkBall(float x, float y, Color color)
 
 void resolveBallCollision(Ball *a, Ball *b)
 {
-    // direction du choc (A -> B)
-    Vector2 delta = Vector2Subtract(b->center, a->center);
-
-    // distance entre les 2 centre
-    float dist = Vector2Length(delta);
-
-    if (dist == 0)
-        return;
-
-    Vector2 normal = Vector2Normalize(delta);
-
-    float minDist = a->radius + b->radius;
-
-    float overlap = minDist - dist;
-
-    // corrige si les billes rentre un les unes dans les autres
-    if (overlap > 0)
+    Vector2 impact = Vector2Subtract(b->center, a->center);
+    int distance = Vector2Length(impact);
+    Vector2 normalImpact = Vector2Normalize(impact);
+    int overlap = (BALL_RADIUS * 2) - distance;
+    if (overlap)
     {
-        a->center = Vector2Subtract(a->center, Vector2Scale(normal, overlap * 0.5f));
-        b->center = Vector2Add(b->center, Vector2Scale(normal, overlap * 0.5f));
+        a->center = Vector2Subtract(a->center, Vector2Scale(normalImpact, overlap * .5f));
+        b->center = Vector2Subtract(b->center, Vector2Scale(normalImpact, overlap * .5f));
     }
-
-    // vitesse relative A vs B
-    Vector2 relative = Vector2Subtract(a->velocity, b->velocity);
-
-    // projection sur la normale (dot)
-    float push = Vector2DotProduct(relative, normal);
-
-    // elles s’éloignent déjà
-    if (push < 0)
+    Vector2 relativeVelocity = Vector2Subtract(a->velocity, b->velocity);
+    float impulse = Vector2DotProduct(relativeVelocity, normalImpact);
+    if (impulse <= 0)
         return;
+    a->velocity = Vector2Subtract(a->velocity, Vector2Scale(normalImpact, impulse));
+    b->velocity = Vector2Add(b->velocity, Vector2Scale(normalImpact, impulse));
+}
 
-    Vector2 impulse = Vector2Scale(normal, push);
-
-    // A perd vitesse sur l’axe du choc
-    a->velocity = Vector2Subtract(a->velocity, impulse);
-    // B gagne vitesse sur l’axe du choc
-    b->velocity = Vector2Add(b->velocity, impulse);
+int main(int argc, char const *argv[])
+{
+    SetConfigFlags(FLAG_WINDOW_HIGHDPI);
+    InitWindow(WIDTH, HEIGHT, "Pool");
+    SetTargetFPS(40);
+    setupGame();
+    while (!WindowShouldClose())
+    {
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+        gameLoop();
+        EndDrawing();
+    }
+    CloseWindow();
+    return 0;
 }

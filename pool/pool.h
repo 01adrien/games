@@ -79,6 +79,12 @@ typedef struct pool
     Player player[2];
 } Pool;
 
+typedef struct gameContext
+{
+    void (*setupGame)(void);
+    Pool pool;
+} GameContext;
+
 void setupGame();
 void drawPool(Pool pool);
 void drawTable(Rectangle table);
@@ -90,7 +96,10 @@ void handleInput();
 void checkHitBorder(Ball *ball);
 bool isShooting(Player player);
 
-void printVector2(Vector2 v);
+inline void printVector2(Vector2 v)
+{
+    printf("x = %.2f  |  y = %.2f\n", v.x, v.y);
+}
 
 bool isNotMoving(Ball ball);
 

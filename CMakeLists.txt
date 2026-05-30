@@ -7,6 +7,7 @@ include(FetchContent)
 
 set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 set(BUILD_GAMES OFF CACHE BOOL "" FORCE)
+set(BUILD_SHARED_LIBS ON CACHE BOOL "Build shared libraries" FORCE)
 
 FetchContent_Declare(
     raylib
@@ -15,6 +16,66 @@ FetchContent_Declare(
 )
 
 FetchContent_MakeAvailable(raylib)
+
+# 1. Find Dependencies
+# Find the system library for dynamic loading (dlopen, dlsym)
+find_library(DL_LIBRARY dl REQUIRED)
+
+# =========================================================
+# HOT RELOAD GAME FUNCTION
+# =========================================================
+
+function(add_hot_game NAME)
+
+    # ---------------------------------
+    # Plugin (.so)
+    # ---------------------------------
+
+    add_library(${NAME}_plugin SHARED
+        ${NAME}/plugin.c
+    )
+
+    target_include_directories(${NAME}_plugin PRIVATE
+        ${NAME}
+        shared
+    )
+
+    target_link_libraries(${NAME}_plugin PRIVATE
+        raylib
+        m
+    )
+
+    # Prevent lib prefix:
+    # vector_plugin.so instead of libvector_plugin.so
+
+    set_target_properties(${NAME}_plugin PROPERTIES
+        PREFIX ""
+        OUTPUT_NAME "${NAME}_plugin"
+    )
+
+    # ---------------------------------
+    # Loader executable
+    # ---------------------------------
+
+    add_executable(${NAME}
+        ${NAME}/${NAME}.c
+        shared/utils.c
+        shared/hotreload.c
+    )
+
+    target_include_directories(${NAME} PRIVATE
+        ${NAME}
+        shared
+    )
+
+    target_link_libraries(${NAME} PRIVATE
+        raylib
+        m
+        ${DL_LIBRARY}
+    )
+
+endfunction()
+
 
 # =========================
 # PONG
@@ -83,17 +144,8 @@ target_link_libraries(trigo raylib m)
 
 
 # =========================
-# VECTOR
+# HOTRELOAD
 # =========================
 
-add_executable(vector
-    vector/vector.c
-    shared/utils.c
-)
-
-target_include_directories(vector PRIVATE
-    vector
-    shared
-)
-
-target_link_libraries(vector raylib m)
+add_hot_game(hotreload)
+add_hot_game(vector)

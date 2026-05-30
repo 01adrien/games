@@ -72,7 +72,7 @@ Tu affiches une valeur dot à l’écran.
 
 - velocity perpendiculaire :
   dot proche de 0
-
+>
 - velocity opposée :
   dot négatif
 
@@ -131,7 +131,7 @@ Puis repart :
 
 ---------------------------------------------------------------------------
 
-EXO 6 — RELATIVE VELOCITY
+  EXO 6 — RELATIVE VELOCITY
 
 VISUEL :
 - 2 billes
