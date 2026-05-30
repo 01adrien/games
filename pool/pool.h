@@ -79,27 +79,30 @@ typedef struct pool
     Player player[2];
 } Pool;
 
-typedef struct gameContext
-{
-    void (*setupGame)(void);
-    Pool pool;
-} GameContext;
+typedef struct gameContext GameContext;
 
-void setupGame();
-void drawPool(Pool pool);
-void drawTable(Rectangle table);
+struct gameContext
+{
+    void (*setupGame)(GameContext *);
+    Pool pool;
+    Ball *whiteBall;
+    Player *currentPlayer;
+};
+
+void setupGame(GameContext *ctx);
+void gameLoop(GameContext *ctx);
+
+void drawPool(GameContext *ctx);
+void drawTable(GameContext *ctx);
 void drawBall(Ball ball);
 void drawCue(Cue cue);
-void moveCue(Cue *cue);
-void moveBalls();
-void handleInput();
-void checkHitBorder(Ball *ball);
+void moveCue(GameContext *ctx);
+void moveBalls(GameContext *ctx);
+void handleInput(GameContext *ctx);
+void checkHitBorder(GameContext *ctx, Ball *ball);
 bool isShooting(Player player);
 
-inline void printVector2(Vector2 v)
-{
-    printf("x = %.2f  |  y = %.2f\n", v.x, v.y);
-}
+void printVector2(Vector2 v);
 
 bool isNotMoving(Ball ball);
 
