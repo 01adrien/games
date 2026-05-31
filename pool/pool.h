@@ -12,12 +12,19 @@
 #define MAX_BALLS 16
 #define TABLE_WIDTH (WIDTH / 3 * 2)
 #define TABLE_HEIGHT (HEIGHT / 3 * 2)
-#define TABLE_BORDER 25
-#define HOLE_RADIUS 15
-#define HOLE_BORDER 10
+#define TABLE_BORDER 30
+#define JAW_SIZE 15
+#define HOLE_RADIUS 20
 #define BALL_RADIUS 13
 #define CUE_LENGTH 350
 #define MAX_PULL_BACK 50
+#define CORNER_JAW_ANGLE 50
+#define SIDE_JAW_ANGLE 15
+
+#define NORMAL_LEFT (Vector2){.x = -1, .y = 0}
+#define NORMAL_RIGHT (Vector2){.x = 1, .y = 0}
+#define NORMAL_TOP (Vector2){.x = 0, .y = -1}
+#define NORMAL_BOTTOM (Vector2){.x = 0, .y = 1}
 
 typedef enum ballState
 {
@@ -37,10 +44,23 @@ typedef struct ball
     BallState state;
 } Ball;
 
+typedef enum jawPos
+{
+    JAW_LEFT,
+    JAW_CENTER,
+    JAW_RIGHT,
+} JawPos;
+
+typedef struct jaw
+{
+    Vector2 start, end, normal;
+} Jaw;
+
 typedef struct hole
 {
     Vector2 center;
     float radius;
+    Jaw jaws[2];
 } Hole;
 
 typedef enum cueState
@@ -92,14 +112,20 @@ struct gameContext
 void setupGame(GameContext *ctx);
 void gameLoop(GameContext *ctx);
 
+void drawFloor();
 void drawPool(GameContext *ctx);
-void drawTable(GameContext *ctx);
+void drawTable(Rectangle table);
+void drawHoles(Hole *holes);
 void drawBall(Ball ball);
 void drawCue(Cue cue);
+void drawBand(Vector2 start, Vector2 end);
 void moveCue(GameContext *ctx);
 void moveBalls(GameContext *ctx);
 void handleInput(GameContext *ctx);
-void checkHitBorder(GameContext *ctx, Ball *ball);
+
+Vector2 getNormal(Vector2 start, Vector2 end);
+bool checkHitBands(GameContext *ctx, Ball *ball);
+bool checkHitJaws(GameContext *ctx, Ball *ball);
 bool isShooting(Player player);
 
 void printVector2(Vector2 v);
@@ -107,23 +133,25 @@ void printVector2(Vector2 v);
 bool isNotMoving(Ball ball);
 
 Ball mkBall(float x, float y, Color color);
+
+Hole mkHole(float x, float y, float angleL, float angleR, float angleC, JawPos jawPos);
+
 void resolveBallCollision(Ball *a, Ball *b);
-
-/*
-
-Vx = (1, 0)
-Vy = (0, 1)
-
-*/
 
 #endif // POOL_H
 
 /*
-on trouve la direction du chaoc
-on fait la normal de ce vecteur
-overlap
-vitesse relative
-dot product
-injection du dot dans la normale
+
+| Angle | Direction |
+| ----- | --------- |
+| 0°    | →         |
+| 45°   | ↘         |
+| 90°   | ↓         |
+| 135°  | ↙         |
+| 180°  | ←         |
+| 225°  | ↖         |
+| 270°  | ↑         |
+| 315°  | ↗         |
+
 
 */

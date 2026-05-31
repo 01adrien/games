@@ -1,3 +1,4 @@
+
 #include "pool.h"
 
 void setupGame(GameContext *ctx)
@@ -9,39 +10,54 @@ void setupGame(GameContext *ctx)
     ctx->pool.table.width = TABLE_WIDTH;
     ctx->pool.table.x = WIDTH / 3 / 2;
     ctx->pool.table.y = HEIGHT / 3 / 2;
-    int gap = 0;
+
     // holes setup
-    Vector2 center = (Vector2){.x = ctx->pool.table.x + gap, .y = ctx->pool.table.y + gap};
-    for (size_t i = 0; i < MAX_HOLES; i++)
-    {
-        ctx->pool.holes[i].center = center;
-        ctx->pool.holes[i].radius = HOLE_RADIUS;
-        if (i == (MAX_HOLES / 2) - 1)
-            center = (Vector2){
-                .x = ctx->pool.table.x + gap,
-                .y = ctx->pool.table.y + TABLE_HEIGHT - gap,
-            };
-        else
-            center.x += (TABLE_WIDTH) / 2 - gap;
-    }
+    float holeY = ctx->pool.table.y;
+    float holeX = ctx->pool.table.x;
+
+    ctx->pool.holes[0] = mkHole(
+        ctx->pool.table.x + JAW_SIZE,
+        ctx->pool.table.y + JAW_SIZE,
+        60, 30, 135, JAW_LEFT);
+
+    ctx->pool.holes[1] = mkHole(
+        ctx->pool.table.x + TABLE_WIDTH / 2,
+        ctx->pool.table.y,
+        120, 60, 180, JAW_CENTER);
+
+    ctx->pool.holes[2] = mkHole(
+        ctx->pool.table.x + TABLE_WIDTH - JAW_SIZE,
+        ctx->pool.table.y + JAW_SIZE,
+        150, 120, 225, JAW_RIGHT);
+
+    ctx->pool.holes[3] = mkHole(
+        ctx->pool.table.x + JAW_SIZE,
+        ctx->pool.table.y + TABLE_HEIGHT - JAW_SIZE,
+        300, 330, 225, JAW_LEFT);
+
+    ctx->pool.holes[4] = mkHole(
+        ctx->pool.table.x + TABLE_WIDTH / 2,
+        ctx->pool.table.y + TABLE_HEIGHT,
+        240, 300, 180, JAW_CENTER);
+
+    ctx->pool.holes[5] = mkHole(
+        ctx->pool.table.x + TABLE_WIDTH - JAW_SIZE,
+        ctx->pool.table.y + TABLE_HEIGHT - JAW_SIZE,
+        210, 240, 135, JAW_RIGHT);
 
     int xm = WIDTH / 3;
     int ym = HEIGHT / 2;
 
     ctx->pool.balls[0] = mkBall(xm, ym, WHITE);
     ctx->whiteBall = &ctx->pool.balls[0];
-
     xm += 300;
-
     int ballIndex = 1;
-
     for (size_t i = 0; i < 5; i++)
     {
         for (size_t j = 0; j <= i; j++)
         {
             int x = xm + (i * BALL_RADIUS * 2);
             int y = ym + (j * BALL_RADIUS * 2) - (i * BALL_RADIUS);
-
             ctx->pool.balls[ballIndex++] = mkBall(x, y, RED);
         }
     }
@@ -61,9 +77,26 @@ void setupGame(GameContext *ctx)
     ctx->currentPlayer = &ctx->pool.player[0];
 }
 
+void drawFloor()
+{
+    Color darkBlue = (Color){25, 45, 85, 255};
+    Color lightBlue = (Color){35, 65, 115, 255};
+
+    DrawRectangle(0, 0, WIDTH, HEIGHT, darkBlue);
+
+    const int plankWidth = 60;
+
+    for (int x = 0; x < WIDTH; x += plankWidth)
+    {
+        DrawRectangle(x, 0, plankWidth - 2, HEIGHT, (x / plankWidth) % 2 ? darkBlue : lightBlue);
+        DrawLine(x + plankWidth - 1, 0, x + plankWidth - 1, HEIGHT, Fade(BLACK, 0.2f));
+    }
+}
+
 void drawPool(GameContext *ctx)
 {
-    drawTable(ctx);
+    drawTable(ctx->pool.table);
+    drawHoles(ctx->pool.holes);
     for (size_t i = 0; i < MAX_BALLS; i++)
     {
         drawBall(ctx->pool.balls[i]);
@@ -71,10 +104,8 @@ void drawPool(GameContext *ctx)
     drawCue(ctx->currentPlayer->cue);
 }
 
-void drawTable(GameContext *ctx)
+void drawTable(Rectangle table)
 {
-    Rectangle table = ctx->pool.table;
-
     Rectangle outerRect = {
         table.x - TABLE_BORDER,
         table.y - TABLE_BORDER,
@@ -89,7 +120,7 @@ void drawTable(GameContext *ctx)
             outerRect.width,
             outerRect.height},
         0.04f,
-        24,
+        50,
         Fade(BLACK, 0.25f));
 
     // Bois externe
@@ -101,15 +132,39 @@ void drawTable(GameContext *ctx)
     // Tapis
     DrawRectangleRounded(table, 0.03f, 24, (Color){18, 120, 75, 255});
 
-    // Contour tapis
+    // // Contour tapis
     DrawRectangleRoundedLinesEx(table, 0.03f, 24, 3, Fade(BLACK, 0.25f));
+}
 
-    for (size_t i = 0; i < MAX_HOLES; i++)
-        DrawCircleV(ctx->pool.holes[i].center, HOLE_RADIUS, BLACK);
+void drawHoles(Hole *holes)
+{
+    for (size_t i = 0; i < 6; i++)
+    {
+        Hole h = holes[i];
+        DrawCircleV(h.center, h.radius, BLACK);
+        for (size_t j = 0; j < 2; j++)
+        {
+            drawBand(h.jaws[j].start, h.jaws[j].end);
+        }
+    }
+    int from = 0;
+    int to = 1;
+
+    drawBand(holes[from++].jaws[1].end, holes[to++].jaws[0].end);
+    drawBand(holes[from++].jaws[1].end, holes[to++].jaws[0].end);
+    from++;
+    to++;
+    drawBand(holes[from++].jaws[1].end, holes[to++].jaws[0].end);
+    drawBand(holes[from++].jaws[1].end, holes[to++].jaws[0].end);
+    drawBand(holes[3].jaws[0].end, holes[0].jaws[0].end);
+    drawBand(holes[2].jaws[1].end, holes[5].jaws[1].end);
 }
 
 void drawBall(Ball ball)
 {
+    if (ball.state == BALL_OUT)
+        return;
+
     // Ombre
     DrawCircleV((Vector2){ball.center.x + 4, ball.center.y + 4}, ball.radius, Fade(BLACK, 0.25f));
 
@@ -132,7 +187,6 @@ void drawCue(Cue cue)
 {
     if (cue.state != CUE_HIT)
     {
-        printVector2(cue.pos);
         float length = cue.length;
         Vector2 end = Vector2Add(cue.pos, Vector2Scale(cue.dir, length));
         DrawLineEx(
@@ -152,6 +206,13 @@ void drawCue(Cue cue)
     }
 }
 
+void drawBand(Vector2 start, Vector2 end)
+{
+    Vector2 lightDir = Vector2Normalize((Vector2){-1, -1});
+    Vector2 shadowOffset = Vector2Scale(lightDir, 4);
+    DrawLineEx(Vector2Add(start, shadowOffset), Vector2Add(end, shadowOffset), 2, Fade(BLACK, 0.15f));
+    DrawLineV(start, end, BLACK);
+}
 void moveCue(GameContext *ctx)
 {
     Cue *cue = &ctx->currentPlayer->cue;
@@ -213,12 +274,16 @@ void moveCue(GameContext *ctx)
 
 void moveBalls(GameContext *ctx)
 {
-
     int moving = MAX_BALLS;
-
     for (size_t i = 0; i < MAX_BALLS; i++)
     {
         Ball *b = &ctx->pool.balls[i];
+        if (b->state == BALL_OUT)
+        {
+            moving--;
+            continue;
+        }
+
         if (b->state == BALL_MOVING)
         {
             moving++;
@@ -227,9 +292,20 @@ void moveBalls(GameContext *ctx)
                 moving--;
                 b->state = BALL_IDLE;
             }
+            for (size_t k = 0; k < MAX_HOLES; k++)
+            {
+                if (Vector2Length(Vector2Subtract(b->center, ctx->pool.holes[k].center)) <= BALL_RADIUS)
+                {
+                    moving--;
+                    b->state = BALL_OUT;
+                }
+            }
+
             b->center = Vector2Add(b->center, b->velocity);
             b->velocity = Vector2Scale(b->velocity, 0.99);
-            checkHitBorder(ctx, b);
+            checkHitBands(ctx, b);
+            checkHitJaws(ctx, b);
+
             for (size_t j = 0; j < MAX_BALLS; j++)
             {
                 if (i == j)
@@ -284,6 +360,7 @@ void gameLoop(GameContext *ctx)
     if (ctx->whiteBall->state != BALL_MOVING)
         moveCue(ctx);
     moveBalls(ctx);
+    drawFloor();
     drawPool(ctx);
 }
 
@@ -292,20 +369,55 @@ bool isShooting(Player player)
     return player.cue.state == CUE_SHOOT || player.cue.state == CUE_HIT;
 }
 
-void checkHitBorder(GameContext *ctx, Ball *ball)
+bool checkHitBands(GameContext *ctx, Ball *ball)
 {
 
-    if ((ball->center.x + ball->radius) >= (ctx->pool.table.x + ctx->pool.table.width))
-        ball->velocity = Vector2Reflect(ball->velocity, (Vector2){.x = -1, .y = 0});
+    bool hit = false;
 
-    else if ((ball->center.y + ball->radius) >= (ctx->pool.table.y + ctx->pool.table.height))
-        ball->velocity = Vector2Reflect(ball->velocity, (Vector2){.x = 0, .y = 1});
+    Hole *hole = ctx->pool.holes;
+    if (CheckCollisionCircleLine(ball->center, ball->radius, hole->jaws[1].end, (hole + 1)->jaws[0].end) ||
+        CheckCollisionCircleLine(ball->center, ball->radius, (hole + 1)->jaws[1].end, (hole + 2)->jaws[0].end))
+    {
+        ball->velocity = Vector2Reflect(ball->velocity, NORMAL_BOTTOM);
+        hit = true;
+    }
+    else if (CheckCollisionCircleLine(ball->center, ball->radius, (hole + 3)->jaws[1].end, (hole + 4)->jaws[0].end) ||
+             CheckCollisionCircleLine(ball->center, ball->radius, (hole + 4)->jaws[1].end, (hole + 5)->jaws[0].end))
+    {
+        ball->velocity = Vector2Reflect(ball->velocity, NORMAL_TOP);
+        hit = true;
+    }
+    else if (CheckCollisionCircleLine(ball->center, ball->radius, (hole + 3)->jaws[0].end, (hole)->jaws[0].end))
+    {
+        ball->velocity = Vector2Reflect(ball->velocity, NORMAL_RIGHT);
+        hit = true;
+    }
+    else if (CheckCollisionCircleLine(ball->center, ball->radius, (hole + 2)->jaws[1].end, (hole + 5)->jaws[1].end))
+    {
+        ball->velocity = Vector2Reflect(ball->velocity, NORMAL_LEFT);
+        hit = true;
+    }
+    return hit;
+}
 
-    else if ((ball->center.y - ball->radius) <= ctx->pool.table.y)
-        ball->velocity = Vector2Reflect(ball->velocity, (Vector2){.x = 0, .y = -1});
+bool checkHitJaws(GameContext *ctx, Ball *ball)
+{
 
-    else if ((ball->center.x - ball->radius) <= ctx->pool.table.x)
-        ball->velocity = Vector2Reflect(ball->velocity, (Vector2){.x = 1, .y = 0});
+    Hole hole;
+    for (size_t i = 0; i < MAX_HOLES; i++)
+    {
+        hole = ctx->pool.holes[i];
+        for (size_t j = 0; j < 2; j++)
+        {
+            Jaw jaw = hole.jaws[j];
+            if (CheckCollisionCircleLine(ball->center, ball->radius, jaw.start, jaw.end))
+            {
+                ball->velocity = Vector2Reflect(ball->velocity, jaw.normal);
+            }
+        }
+    }
+
+    return false;
 }
 
 bool isNotMoving(Ball ball)
@@ -323,6 +435,46 @@ Ball mkBall(float x, float y, Color color)
         .radius = BALL_RADIUS,
         .state = BALL_IDLE,
         .number = 0,
+    };
+}
+
+Vector2 getNormal(Vector2 start, Vector2 end)
+{
+    Vector2 dir = Vector2Subtract(end, start);
+    Vector2 n = (Vector2){-dir.y, dir.x};
+    return Vector2Normalize(n);
+}
+
+Hole mkHole(float x, float y, float angleL, float angleR, float angleC, JawPos jawPos)
+{
+    int len = (jawPos == JAW_CENTER) ? JAW_SIZE + TABLE_BORDER * .4 : JAW_SIZE + TABLE_BORDER;
+    Vector2 center = {.x = x, .y = y};
+    Vector2 startLeft = {
+        .x = center.x + cosf(angleC * DEG2RAD) * HOLE_RADIUS,
+        .y = center.y + sinf(angleC * DEG2RAD) * HOLE_RADIUS,
+    };
+    Vector2 endLeft = {
+        .x = startLeft.x + cosf(angleL * DEG2RAD) * len,
+        .y = startLeft.y + sinf(angleL * DEG2RAD) * len,
+    };
+    Vector2 startRight = {
+        .x = center.x + cosf((angleC + 180) * DEG2RAD) * HOLE_RADIUS,
+        .y = center.y + sinf((angleC + 180) * DEG2RAD) * HOLE_RADIUS,
+    };
+
+    Vector2 endRight = {
+        .x = startRight.x + cosf(angleR * DEG2RAD) * len,
+        .y = startRight.y + sinf(angleR * DEG2RAD) * len,
+    };
+
+    return (Hole){
+        .center = center,
+        .radius = HOLE_RADIUS,
+        .jaws = {
+            {.start = startLeft, .end = endLeft, .normal = getNormal(startLeft, endLeft)},
+            {.start = startRight, .end = endRight, .normal = getNormal(startRight, endRight)},
+
+        },
     };
 }
 
