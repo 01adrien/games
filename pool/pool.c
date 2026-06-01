@@ -45,6 +45,40 @@ void setupGame(GameContext *ctx)
         ctx->pool.table.y + TABLE_HEIGHT - JAW_SIZE,
         210, 240, 135, JAW_RIGHT);
 
+    ctx->pool.bands[0] = (Band){
+        .start = ctx->pool.holes[3].jaws[0].end,
+        .end = ctx->pool.holes[0].jaws[0].end,
+        .normal = NORMAL_RIGHT,
+    };
+    ctx->pool.bands[1] = (Band){
+        .start = ctx->pool.holes[0].jaws[1].end,
+        .end = ctx->pool.holes[1].jaws[0].end,
+        .normal = NORMAL_BOTTOM,
+    };
+    ctx->pool.bands[2] = (Band){
+        .start = ctx->pool.holes[1].jaws[1].end,
+        .end = ctx->pool.holes[2].jaws[0].end,
+        .normal = NORMAL_BOTTOM,
+    };
+
+    ctx->pool.bands[3] = (Band){
+        .start = ctx->pool.holes[2].jaws[1].end,
+        .end = ctx->pool.holes[5].jaws[1].end,
+        .normal = NORMAL_LEFT,
+    };
+
+    ctx->pool.bands[4] = (Band){
+        .start = ctx->pool.holes[5].jaws[0].end,
+        .end = ctx->pool.holes[4].jaws[1].end,
+        .normal = NORMAL_TOP,
+    };
+
+    ctx->pool.bands[5] = (Band){
+        .start = ctx->pool.holes[4].jaws[0].end,
+        .end = ctx->pool.holes[3].jaws[1].end,
+        .normal = NORMAL_TOP,
+    };
+
     int xm = WIDTH / 3;
     int ym = HEIGHT / 2;
 
@@ -62,15 +96,15 @@ void setupGame(GameContext *ctx)
         }
     }
 
-    float angle = PI;
+    float angle = 0;
     ctx->pool.player[0].cue.length = CUE_LENGTH;
     ctx->pool.player[0].cue.dir = Vector2Normalize((Vector2){.x = cosf(angle), .y = sinf(angle)});
     ctx->pool.player[0].cue.pullBack = 0;
     ctx->pool.player[0].cue.pos = (Vector2){
-
         .x = ctx->pool.balls[0].center.x - (BALL_RADIUS * 2),
         .y = ctx->pool.balls[0].center.y,
     };
+    ctx->pool.player[0].cue.rayLen = 400;
     ctx->pool.player[0].cue.state = CUE_IDLE;
     ctx->pool.player[0].cue.angle = angle;
 
@@ -101,7 +135,9 @@ void drawPool(GameContext *ctx)
     {
         drawBall(ctx->pool.balls[i]);
     }
+    drawBands(ctx->pool.bands);
     drawCue(ctx->currentPlayer->cue);
+    drawHitRay(ctx);
 }
 
 void drawTable(Rectangle table)
@@ -136,6 +172,37 @@ void drawTable(Rectangle table)
     DrawRectangleRoundedLinesEx(table, 0.03f, 24, 3, Fade(BLACK, 0.25f));
 }
 
+Vector2 getRayEnd(GameContext *ctx)
+{
+    Cue *cue = &ctx->currentPlayer->cue;
+    Vector2 cueNormal = Vector2Normalize(cue->dir);
+
+    for (size_t i = 0; i < BANDS_COUNT; i++)
+    {
+        /* code */
+    }
+
+    return Vector2Add(cue->pos, Vector2Scale(cue->dir, 2000));
+}
+
+void drawHitRay(GameContext *ctx)
+{
+    Cue *cue = &ctx->currentPlayer->cue;
+    if (cue->state != CUE_HIT && cue->state != CUE_SHOOT)
+    {
+        Vector2 rayDir = Vector2Negate(Vector2Normalize(cue->dir));
+        Vector2 hitPoint = getRayEnd(ctx);
+        DrawLineV(ctx->whiteBall->center, hitPoint, WHITE);
+        for (size_t i = 1; i < MAX_BALLS; i++)
+        {
+            Ball b = ctx->pool.balls[i];
+            if (b.state != BALL_OUT)
+            {
+            }
+        }
+    }
+}
+
 void drawHoles(Hole *holes)
 {
     for (size_t i = 0; i < 6; i++)
@@ -147,17 +214,12 @@ void drawHoles(Hole *holes)
             drawBand(h.jaws[j].start, h.jaws[j].end);
         }
     }
-    int from = 0;
-    int to = 1;
+}
 
-    drawBand(holes[from++].jaws[1].end, holes[to++].jaws[0].end);
-    drawBand(holes[from++].jaws[1].end, holes[to++].jaws[0].end);
-    from++;
-    to++;
-    drawBand(holes[from++].jaws[1].end, holes[to++].jaws[0].end);
-    drawBand(holes[from++].jaws[1].end, holes[to++].jaws[0].end);
-    drawBand(holes[3].jaws[0].end, holes[0].jaws[0].end);
-    drawBand(holes[2].jaws[1].end, holes[5].jaws[1].end);
+void drawBands(Band *bands)
+{
+    for (size_t i = 0; i < BANDS_COUNT; i++)
+        drawBand(bands[i].start, bands[i].end);
 }
 
 void drawBall(Ball ball)
@@ -188,7 +250,7 @@ void drawCue(Cue cue)
     if (cue.state != CUE_HIT)
     {
         float length = cue.length;
-        Vector2 end = Vector2Add(cue.pos, Vector2Scale(cue.dir, length));
+        Vector2 end = Vector2Add(cue.pos, Vector2Scale(Vector2Negate(cue.dir), length));
         DrawLineEx(
             (Vector2){cue.pos.x + 4, cue.pos.y + 4},
             (Vector2){end.x + 4, end.y + 4},
@@ -213,6 +275,7 @@ void drawBand(Vector2 start, Vector2 end)
     DrawLineEx(Vector2Add(start, shadowOffset), Vector2Add(end, shadowOffset), 2, Fade(BLACK, 0.15f));
     DrawLineV(start, end, BLACK);
 }
+
 void moveCue(GameContext *ctx)
 {
     Cue *cue = &ctx->currentPlayer->cue;
@@ -235,7 +298,7 @@ void moveCue(GameContext *ctx)
     case CUE_SHOOT:
         if (isNotMoving(*whiteBall))
         {
-            whiteBall->velocity = Vector2Scale(cue->dir, -ctx->currentPlayer->cue.pullBack / 2);
+            whiteBall->velocity = Vector2Scale(cue->dir, ctx->currentPlayer->cue.pullBack / 2);
         }
 
         if (CheckCollisionPointCircle(cue->pos, whiteBall->center, whiteBall->radius))
@@ -269,7 +332,7 @@ void moveCue(GameContext *ctx)
 
     cue->pos = Vector2Subtract(
         whiteBall->center,
-        Vector2Scale(cue->dir, -distance));
+        Vector2Scale(cue->dir, distance));
 }
 
 void moveBalls(GameContext *ctx)
@@ -373,30 +436,16 @@ bool checkHitBands(GameContext *ctx, Ball *ball)
 {
 
     bool hit = false;
+    Band *bands = ctx->pool.bands;
+    for (size_t i = 0; i < BANDS_COUNT; i++)
+    {
+        if (CheckCollisionCircleLine(ball->center, ball->radius, bands[i].start, bands[i].end))
+        {
+            ball->velocity = Vector2Reflect(ball->velocity, bands[i].normal);
+            hit = true;
+        }
+    }
 
-    Hole *hole = ctx->pool.holes;
-    if (CheckCollisionCircleLine(ball->center, ball->radius, hole->jaws[1].end, (hole + 1)->jaws[0].end) ||
-        CheckCollisionCircleLine(ball->center, ball->radius, (hole + 1)->jaws[1].end, (hole + 2)->jaws[0].end))
-    {
-        ball->velocity = Vector2Reflect(ball->velocity, NORMAL_BOTTOM);
-        hit = true;
-    }
-    else if (CheckCollisionCircleLine(ball->center, ball->radius, (hole + 3)->jaws[1].end, (hole + 4)->jaws[0].end) ||
-             CheckCollisionCircleLine(ball->center, ball->radius, (hole + 4)->jaws[1].end, (hole + 5)->jaws[0].end))
-    {
-        ball->velocity = Vector2Reflect(ball->velocity, NORMAL_TOP);
-        hit = true;
-    }
-    else if (CheckCollisionCircleLine(ball->center, ball->radius, (hole + 3)->jaws[0].end, (hole)->jaws[0].end))
-    {
-        ball->velocity = Vector2Reflect(ball->velocity, NORMAL_RIGHT);
-        hit = true;
-    }
-    else if (CheckCollisionCircleLine(ball->center, ball->radius, (hole + 2)->jaws[1].end, (hole + 5)->jaws[1].end))
-    {
-        ball->velocity = Vector2Reflect(ball->velocity, NORMAL_LEFT);
-        hit = true;
-    }
     return hit;
 }
 

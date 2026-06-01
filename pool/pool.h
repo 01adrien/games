@@ -18,6 +18,7 @@
 #define BALL_RADIUS 13
 #define CUE_LENGTH 350
 #define MAX_PULL_BACK 50
+#define BANDS_COUNT 6
 #define CORNER_JAW_ANGLE 50
 #define SIDE_JAW_ANGLE 15
 
@@ -51,6 +52,11 @@ typedef enum jawPos
     JAW_RIGHT,
 } JawPos;
 
+typedef struct band
+{
+    Vector2 start, end, normal;
+} Band;
+
 typedef struct jaw
 {
     Vector2 start, end, normal;
@@ -82,6 +88,7 @@ typedef struct cue
     float pullBack;
     float length;
     CueState state;
+    float rayLen;
 
 } Cue;
 
@@ -96,6 +103,7 @@ typedef struct pool
     Rectangle table;
     Hole holes[MAX_HOLES];
     Ball balls[MAX_BALLS];
+    Band bands[BANDS_COUNT];
     Player player[2];
 } Pool;
 
@@ -116,13 +124,15 @@ void drawFloor();
 void drawPool(GameContext *ctx);
 void drawTable(Rectangle table);
 void drawHoles(Hole *holes);
+void drawBands(Band *bands);
 void drawBall(Ball ball);
 void drawCue(Cue cue);
 void drawBand(Vector2 start, Vector2 end);
 void moveCue(GameContext *ctx);
 void moveBalls(GameContext *ctx);
 void handleInput(GameContext *ctx);
-
+void drawHitRay(GameContext *ctx);
+Vector2 getRayEnd(GameContext *ctx);
 Vector2 getNormal(Vector2 start, Vector2 end);
 bool checkHitBands(GameContext *ctx, Ball *ball);
 bool checkHitJaws(GameContext *ctx, Ball *ball);
