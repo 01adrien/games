@@ -176,10 +176,38 @@ Vector2 getRayEnd(GameContext *ctx)
 {
     Cue *cue = &ctx->currentPlayer->cue;
     Vector2 cueNormal = Vector2Normalize(cue->dir);
+    Vector2 impact;
 
-    for (size_t i = 0; i < BANDS_COUNT; i++)
+    int x = ctx->pool.table.x;
+    int y = ctx->pool.table.y;
+
+    int border = TABLE_BORDER - 6;
+
+    Vector2 normals[4] = {
+        NORMAL_BOTTOM,
+        NORMAL_LEFT,
+        NORMAL_TOP,
+        NORMAL_RIGHT,
+    };
+
+    Vector2 corners[4] = {
+        {.x = x + border, .y = y + border},
+        {.x = x + TABLE_WIDTH - border, .y = y + border},
+        {.x = x + TABLE_WIDTH - border, .y = y + TABLE_HEIGHT - border},
+        {.x = x + border, .y = y + TABLE_HEIGHT - border},
+    };
+
+    for (size_t i = 0; i < 4; i++)
     {
-        /* code */
+        size_t j = (i + 1) % 4;
+
+        if (CheckCollisionLines(
+                ctx->whiteBall->center,
+                Vector2Add(ctx->whiteBall->center, Vector2Scale(cueNormal, 2000)),
+                Vector2Add(corners[i], Vector2Scale(normals[i], BALL_RADIUS)),
+                Vector2Add(corners[j], Vector2Scale(normals[i], BALL_RADIUS)),
+                &impact))
+            return impact;
     }
 
     return Vector2Add(cue->pos, Vector2Scale(cue->dir, 2000));
@@ -190,16 +218,37 @@ void drawHitRay(GameContext *ctx)
     Cue *cue = &ctx->currentPlayer->cue;
     if (cue->state != CUE_HIT && cue->state != CUE_SHOOT)
     {
-        Vector2 rayDir = Vector2Negate(Vector2Normalize(cue->dir));
+        Vector2 rayDir = Vector2Normalize(cue->dir);
         Vector2 hitPoint = getRayEnd(ctx);
-        DrawLineV(ctx->whiteBall->center, hitPoint, WHITE);
+
+        float farDistance = Vector2Length(Vector2Subtract(hitPoint, ctx->whiteBall->center));
+
         for (size_t i = 1; i < MAX_BALLS; i++)
         {
             Ball b = ctx->pool.balls[i];
             if (b.state != BALL_OUT)
             {
+                if (CheckCollisionCircleLine(b.center, b.radius * 2, ctx->whiteBall->center, hitPoint))
+                {
+                    Vector2 toBall = Vector2Subtract(b.center, ctx->whiteBall->center);
+                    float distance = Vector2Length(toBall);
+                    if (distance < farDistance)
+                    {
+                        float t = Vector2DotProduct(toBall, rayDir);
+                        hitPoint = Vector2Add(ctx->whiteBall->center, Vector2Scale(rayDir, t));
+                        float betweenCenter = Vector2Length(Vector2Subtract(hitPoint, b.center));
+                        float overlap = betweenCenter - 2 * BALL_RADIUS;
+                        int radius = BALL_RADIUS * 2;
+                        float offset = sqrtf(radius * radius - betweenCenter * betweenCenter);
+                        if (overlap)
+                            hitPoint = Vector2Add(hitPoint, Vector2Scale(rayDir, -offset));
+                        farDistance = distance;
+                    }
+                }
             }
         }
+        DrawLineV(ctx->whiteBall->center, hitPoint, WHITE);
+        DrawCircleLinesV(hitPoint, BALL_RADIUS, WHITE);
     }
 }
 
@@ -312,11 +361,11 @@ void moveCue(GameContext *ctx)
         break;
 
     case CUE_ROTATE_CK:
-        cue->angle += 0.03f;
+        cue->angle += 0.01f;
         break;
 
     case CUE_ROTATE_ACK:
-        cue->angle -= 0.03f;
+        cue->angle -= 0.01f;
         break;
 
     default:
