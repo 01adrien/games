@@ -1,6 +1,8 @@
 
 #include "pool.h"
 
+int throwParticule = 0;
+
 void setupGame(GameContext *ctx)
 {
 
@@ -10,6 +12,9 @@ void setupGame(GameContext *ctx)
     ctx->pool.table.width = TABLE_WIDTH;
     ctx->pool.table.x = WIDTH / 3 / 2;
     ctx->pool.table.y = HEIGHT / 3 / 2;
+
+    ctx->pool.yellowCount = 0;
+    ctx->pool.redCount = 0;
 
     // holes setup
     float holeY = ctx->pool.table.y;
@@ -82,17 +87,26 @@ void setupGame(GameContext *ctx)
     int xm = WIDTH / 3;
     int ym = HEIGHT / 2;
 
-    ctx->pool.balls[0] = mkBall(xm, ym, WHITE);
+    ctx->pool.balls[0] = mkBall(xm, ym, WHITE, BALL_WHITE, 0);
     ctx->whiteBall = &ctx->pool.balls[0];
     xm += 300;
     int ballIndex = 1;
+    Color colors[] = {YELLOW, RED};
     for (size_t i = 0; i < 5; i++)
     {
         for (size_t j = 0; j <= i; j++)
         {
             int x = xm + (i * BALL_RADIUS * 2);
             int y = ym + (j * BALL_RADIUS * 2) - (i * BALL_RADIUS);
-            ctx->pool.balls[ballIndex++] = mkBall(x, y, RED);
+
+            ctx->pool.balls[ballIndex] = mkBall(
+                x, y, colors[ballIndex % 2], ballIndex % 2 == 1 ? BALL_RED : BALL_YELLOW, ballIndex);
+            if (ballIndex == 5)
+            {
+                ctx->pool.balls[ballIndex].color = BLACK;
+                ctx->pool.balls[ballIndex].kind = BALL_BLACK;
+            }
+            ballIndex++;
         }
     }
 
@@ -109,6 +123,19 @@ void setupGame(GameContext *ctx)
     ctx->pool.player[0].cue.angle = angle;
 
     ctx->currentPlayer = &ctx->pool.player[0];
+    ctx->pool.currentPlayer = 0;
+}
+
+void setupParticules(GameContext *ctx)
+{
+    for (size_t i = 0; i < MAX_PARTICULES; i++)
+    {
+        ctx->pool.particules[i] = (Particule){
+            .pos = {.x = WIDTH / 2, .y = HEIGHT / 2},
+            .acc = {.x = 0, .y = 0.5},
+            .vel = {.x = GetRandomValue(-3, 3), .y = GetRandomValue(-5, -15)},
+        };
+    }
 }
 
 void drawFloor()
@@ -127,6 +154,44 @@ void drawFloor()
     }
 }
 
+void drawScoreBall(Vector2 center, Color color, int count, int total, BallKind kind, Player player)
+{
+    float r = SCORE_BALL_RADIUS;
+
+    // ombre
+    DrawCircleV((Vector2){center.x + 4, center.y + 4}, r, Fade(BLACK, 0.25f));
+
+    // corps
+    DrawCircleV(center, r, color);
+
+    // highlight
+    DrawCircleV(
+        (Vector2){center.x - r * 0.40f, center.y - r * 0.50f},
+        r * 0.25f,
+        Fade(WHITE, 0.6f));
+
+    // contour
+    DrawCircleLinesV(center, r, Fade(BLACK, 0.3f));
+
+    // compteur
+    char txt[4];
+    snprintf(txt, sizeof(txt), "%d/%d", count, total);
+    int fontSize = 20;
+    int tw = MeasureText(txt, fontSize);
+    DrawText(txt,
+             (int)((center.x - tw / 2)),
+             (int)((center.y - fontSize / 2) + 3),
+             fontSize, BLACK);
+}
+
+void resetWhite(GameContext *ctx)
+{
+    ctx->pool.balls[0].center.x = WIDTH / 3;
+    ctx->pool.balls[0].center.y = HEIGHT / 2;
+    ctx->pool.balls[0].state = BALL_IDLE;
+    ctx->pool.balls[0].velocity = (Vector2){0, 0};
+}
+
 void drawPool(GameContext *ctx)
 {
     drawTable(ctx->pool.table);
@@ -138,6 +203,8 @@ void drawPool(GameContext *ctx)
     drawBands(ctx->pool.bands);
     drawCue(ctx->currentPlayer->cue);
     drawHitRay(ctx);
+    drawScoreBall((Vector2){70, 60}, RED, ctx->pool.redCount, (MAX_BALLS - 1) / 2, BALL_RED, *ctx->currentPlayer);
+    drawScoreBall((Vector2){WIDTH - 70, 60}, YELLOW, ctx->pool.yellowCount, (MAX_BALLS - 1) / 2, BALL_YELLOW, *ctx->currentPlayer);
 }
 
 void drawTable(Rectangle table)
@@ -222,7 +289,7 @@ void drawHitRay(GameContext *ctx)
         Vector2 hitPoint = getRayEnd(ctx);
 
         float farDistance = Vector2Length(Vector2Subtract(hitPoint, ctx->whiteBall->center));
-
+        bool hitBand = true;
         for (size_t i = 1; i < MAX_BALLS; i++)
         {
             Ball b = ctx->pool.balls[i];
@@ -232,17 +299,20 @@ void drawHitRay(GameContext *ctx)
                 {
                     Vector2 toBall = Vector2Subtract(b.center, ctx->whiteBall->center);
                     float distance = Vector2Length(toBall);
-                    if (distance < farDistance)
+                    if (distance < farDistance || (distance >= farDistance && hitBand))
                     {
-                        float t = Vector2DotProduct(toBall, rayDir);
-                        hitPoint = Vector2Add(ctx->whiteBall->center, Vector2Scale(rayDir, t));
-                        float betweenCenter = Vector2Length(Vector2Subtract(hitPoint, b.center));
-                        float overlap = betweenCenter - 2 * BALL_RADIUS;
+                        float dot = Vector2DotProduct(toBall, rayDir);
+                        hitPoint = Vector2Add(ctx->whiteBall->center, Vector2Scale(rayDir, dot));
                         int radius = BALL_RADIUS * 2;
-                        float offset = sqrtf(radius * radius - betweenCenter * betweenCenter);
+                        float betweenCenter = Vector2Length(Vector2Subtract(hitPoint, b.center));
+                        float overlap = betweenCenter - radius;
                         if (overlap)
-                            hitPoint = Vector2Add(hitPoint, Vector2Scale(rayDir, -offset));
+                        {
+                            float d = sqrtf(radius * radius - betweenCenter * betweenCenter);
+                            hitPoint = Vector2Subtract(hitPoint, Vector2Scale(rayDir, d));
+                        }
                         farDistance = distance;
+                        hitBand = false;
                     }
                 }
             }
@@ -276,13 +346,20 @@ void drawBall(Ball ball)
     if (ball.state == BALL_OUT)
         return;
 
-    // Ombre
-    DrawCircleV((Vector2){ball.center.x + 4, ball.center.y + 4}, ball.radius, Fade(BLACK, 0.25f));
+    if (ball.kind == BALL_WHITE)
+    {
+        DrawCircleV(ball.center, ball.radius, WHITE);
+    }
+    else if (ball.kind == BALL_BLACK)
+    {
+        DrawCircleV(ball.center, ball.radius, BLACK);
+    }
+    else
+    {
+        DrawCircleV(ball.center, ball.radius, ball.color);
+    }
 
-    // Corps principal
-    DrawCircleV(ball.center, ball.radius, ball.color);
-
-    // Highlight
+    // Highlight (reflet)
     DrawCircleV(
         (Vector2){
             ball.center.x - ball.radius * 0.35f,
@@ -291,7 +368,7 @@ void drawBall(Ball ball)
         Fade(WHITE, 0.7f));
 
     // Contour subtil
-    DrawCircleLinesV(ball.center, ball.radius, Fade(BLACK, 0.25f));
+    DrawCircleLinesV(ball.center, ball.radius, Fade(BLACK, 0.3f));
 }
 
 void drawCue(Cue cue)
@@ -410,6 +487,40 @@ void moveBalls(GameContext *ctx)
                 {
                     moving--;
                     b->state = BALL_OUT;
+                    throwParticule = true;
+                    if (ctx->pool.yellowCount == 0 && ctx->pool.yellowCount == 0)
+                    {
+                        if (b->kind == BALL_WHITE)
+                        {
+                            resetWhite(ctx);
+                        }
+                        else if (b->kind == BALL_BLACK)
+                            setupGame(ctx);
+                        else if (b->kind == BALL_RED)
+                            ctx->currentPlayer->kind = BALL_RED;
+                        else
+                            ctx->currentPlayer->kind = BALL_BLACK;
+                    }
+
+                    if (b->kind == BALL_RED)
+                    {
+                        ctx->pool.redCount++;
+                        throwParticule = -1;
+                    }
+                    else if (b->kind == BALL_BLACK)
+                    {
+                        /* code */
+                    }
+                    if (b->kind == BALL_WHITE)
+                    {
+                        resetWhite(ctx);
+                        ctx->pool.currentPlayer = (ctx->pool.currentPlayer + 1) % 2;
+                    }
+                    else if (b->kind == BALL_YELLOW)
+                    {
+                        ctx->pool.yellowCount++;
+                        throwParticule = 1;
+                    }
                 }
             }
 
@@ -463,7 +574,9 @@ void handleInput(GameContext *ctx)
             ctx->currentPlayer->cue.state = CUE_IDLE;
     }
     if (IsKeyDown(KEY_BACKSPACE))
+    {
         setupGame(ctx);
+    }
 }
 
 void gameLoop(GameContext *ctx)
@@ -491,6 +604,7 @@ bool checkHitBands(GameContext *ctx, Ball *ball)
         if (CheckCollisionCircleLine(ball->center, ball->radius, bands[i].start, bands[i].end))
         {
             ball->velocity = Vector2Reflect(ball->velocity, bands[i].normal);
+            ball->center = Vector2Add(ball->center, Vector2Scale(ball->velocity, 2));
             hit = true;
         }
     }
@@ -511,6 +625,7 @@ bool checkHitJaws(GameContext *ctx, Ball *ball)
             if (CheckCollisionCircleLine(ball->center, ball->radius, jaw.start, jaw.end))
             {
                 ball->velocity = Vector2Reflect(ball->velocity, jaw.normal);
+                ball->center = Vector2Add(ball->center, Vector2Scale(ball->velocity, 1));
             }
         }
     }
@@ -523,16 +638,17 @@ bool isNotMoving(Ball ball)
     return (int)ball.velocity.x == 0 && (int)ball.velocity.y == 0;
 }
 
-Ball mkBall(float x, float y, Color color)
+Ball mkBall(float x, float y, Color color, BallKind kind, uint8_t number)
 {
     return (Ball){
+        .kind = kind,
         .center.x = x,
         .center.y = y,
         .color = color,
         .velocity = (Vector2){0, 0},
         .radius = BALL_RADIUS,
         .state = BALL_IDLE,
-        .number = 0,
+        .number = number,
     };
 }
 
@@ -595,13 +711,31 @@ void resolveBallCollision(Ball *a, Ball *b)
     b->velocity = Vector2Add(b->velocity, Vector2Scale(normalImpact, impulse));
 }
 
+void moveParticule(Particule *particule)
+{
+    particule->pos = Vector2Add(particule->pos, particule->vel);
+    particule->vel = Vector2Add(particule->vel, particule->acc);
+}
+
+void throwParticules(GameContext *ctx, int side)
+{
+
+    for (size_t i = 0; i < MAX_PARTICULES; i++)
+    {
+        DrawCircleV(ctx->pool.particules[i].pos, 2, YELLOW);
+        moveParticule(&ctx->pool.particules[i]);
+    }
+}
+
 int main(int argc, char const *argv[])
 {
+
     SetConfigFlags(FLAG_WINDOW_HIGHDPI);
     InitWindow(WIDTH, HEIGHT, "Pool");
     SetTargetFPS(40);
     GameContext ctx;
     setupGame(&ctx);
+    setupParticules(&ctx);
     while (!WindowShouldClose())
     {
         BeginDrawing();

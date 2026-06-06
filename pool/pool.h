@@ -21,11 +21,18 @@
 #define BANDS_COUNT 6
 #define CORNER_JAW_ANGLE 50
 #define SIDE_JAW_ANGLE 15
+#define SCORE_BALL_RADIUS 35
+#define MAX_PARTICULES 50
 
 #define NORMAL_LEFT (Vector2){.x = -1, .y = 0}
 #define NORMAL_RIGHT (Vector2){.x = 1, .y = 0}
 #define NORMAL_TOP (Vector2){.x = 0, .y = -1}
 #define NORMAL_BOTTOM (Vector2){.x = 0, .y = 1}
+
+typedef struct particule
+{
+    Vector2 pos, vel, acc;
+} Particule;
 
 typedef enum ballState
 {
@@ -33,6 +40,14 @@ typedef enum ballState
     BALL_MOVING,
     BALL_OUT,
 } BallState;
+
+typedef enum ballKind
+{
+    BALL_RED,
+    BALL_YELLOW,
+    BALL_WHITE,
+    BALL_BLACK,
+} BallKind;
 
 typedef struct ball
 {
@@ -43,6 +58,8 @@ typedef struct ball
     Color color;
     uint8_t number;
     BallState state;
+    BallKind kind;
+    float angle;
 } Ball;
 
 typedef enum jawPos
@@ -96,15 +113,18 @@ typedef struct player
 {
     Cue cue;
     uint8_t score;
+    BallKind kind;
 } Player;
 
 typedef struct pool
 {
     Rectangle table;
+    Particule particules[MAX_PARTICULES];
     Hole holes[MAX_HOLES];
     Ball balls[MAX_BALLS];
     Band bands[BANDS_COUNT];
     Player player[2];
+    uint8_t redCount, yellowCount, currentPlayer;
 } Pool;
 
 typedef struct gameContext GameContext;
@@ -137,16 +157,13 @@ Vector2 getNormal(Vector2 start, Vector2 end);
 bool checkHitBands(GameContext *ctx, Ball *ball);
 bool checkHitJaws(GameContext *ctx, Ball *ball);
 bool isShooting(Player player);
-
 void printVector2(Vector2 v);
-
 bool isNotMoving(Ball ball);
-
-Ball mkBall(float x, float y, Color color);
-
+Ball mkBall(float x, float y, Color color, BallKind kind, uint8_t number);
 Hole mkHole(float x, float y, float angleL, float angleR, float angleC, JawPos jawPos);
-
 void resolveBallCollision(Ball *a, Ball *b);
+void moveParticule(Particule *particule);
+void throwParticules(GameContext *ctx, int side);
 
 #endif // POOL_H
 
