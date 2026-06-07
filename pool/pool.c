@@ -1,8 +1,6 @@
 
 #include "pool.h"
 
-int throwParticule = 0;
-
 void setupGame(GameContext *ctx)
 {
 
@@ -124,18 +122,6 @@ void setupGame(GameContext *ctx)
 
     ctx->currentPlayer = &ctx->pool.player[0];
     ctx->pool.currentPlayer = 0;
-}
-
-void setupParticules(GameContext *ctx)
-{
-    for (size_t i = 0; i < MAX_PARTICULES; i++)
-    {
-        ctx->pool.particules[i] = (Particule){
-            .pos = {.x = WIDTH / 2, .y = HEIGHT / 2},
-            .acc = {.x = 0, .y = 0.5},
-            .vel = {.x = GetRandomValue(-3, 3), .y = GetRandomValue(-5, -15)},
-        };
-    }
 }
 
 void drawFloor()
@@ -475,52 +461,26 @@ void moveBalls(GameContext *ctx)
 
         if (b->state == BALL_MOVING)
         {
-            moving++;
             if (isNotMoving(*b))
             {
-                moving--;
                 b->state = BALL_IDLE;
+                return;
             }
             for (size_t k = 0; k < MAX_HOLES; k++)
             {
                 if (Vector2Length(Vector2Subtract(b->center, ctx->pool.holes[k].center)) <= BALL_RADIUS)
                 {
-                    moving--;
                     b->state = BALL_OUT;
-                    throwParticule = true;
-                    if (ctx->pool.yellowCount == 0 && ctx->pool.yellowCount == 0)
-                    {
-                        if (b->kind == BALL_WHITE)
-                        {
-                            resetWhite(ctx);
-                        }
-                        else if (b->kind == BALL_BLACK)
-                            setupGame(ctx);
-                        else if (b->kind == BALL_RED)
-                            ctx->currentPlayer->kind = BALL_RED;
-                        else
-                            ctx->currentPlayer->kind = BALL_BLACK;
-                    }
 
                     if (b->kind == BALL_RED)
-                    {
                         ctx->pool.redCount++;
-                        throwParticule = -1;
-                    }
                     else if (b->kind == BALL_BLACK)
-                    {
-                        /* code */
-                    }
+                        setupGame(ctx);
                     if (b->kind == BALL_WHITE)
-                    {
                         resetWhite(ctx);
-                        ctx->pool.currentPlayer = (ctx->pool.currentPlayer + 1) % 2;
-                    }
                     else if (b->kind == BALL_YELLOW)
-                    {
                         ctx->pool.yellowCount++;
-                        throwParticule = 1;
-                    }
+                    return;
                 }
             }
 
@@ -711,22 +671,6 @@ void resolveBallCollision(Ball *a, Ball *b)
     b->velocity = Vector2Add(b->velocity, Vector2Scale(normalImpact, impulse));
 }
 
-void moveParticule(Particule *particule)
-{
-    particule->pos = Vector2Add(particule->pos, particule->vel);
-    particule->vel = Vector2Add(particule->vel, particule->acc);
-}
-
-void throwParticules(GameContext *ctx, int side)
-{
-
-    for (size_t i = 0; i < MAX_PARTICULES; i++)
-    {
-        DrawCircleV(ctx->pool.particules[i].pos, 2, YELLOW);
-        moveParticule(&ctx->pool.particules[i]);
-    }
-}
-
 int main(int argc, char const *argv[])
 {
 
@@ -735,7 +679,6 @@ int main(int argc, char const *argv[])
     SetTargetFPS(40);
     GameContext ctx;
     setupGame(&ctx);
-    setupParticules(&ctx);
     while (!WindowShouldClose())
     {
         BeginDrawing();
