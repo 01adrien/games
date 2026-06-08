@@ -1,4 +1,8 @@
 #include "hotreload.h"
+#include <raylib.h>
+#include <stddef.h>
+#include <dlfcn.h>
+#include <time.h>
 
 int reload_plugin(const char *file, long *lastPluginTime, DrawFuncPtr *DrawPlugin, void **plugin_handle)
 {

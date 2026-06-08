@@ -55,51 +55,27 @@
 },
 {
   "directory": "/home/adrien/Bureau/games/build",
-  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -Dhotreload_plugin_EXPORTS -I/home/adrien/Bureau/games/hotreload -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -fPIC -o CMakeFiles/hotreload_plugin.dir/hotreload/plugin.c.o -c /home/adrien/Bureau/games/hotreload/plugin.c",
-  "file": "/home/adrien/Bureau/games/hotreload/plugin.c",
-  "output": "CMakeFiles/hotreload_plugin.dir/hotreload/plugin.c.o"
+  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -Draycaster_plugin_EXPORTS -I/home/adrien/Bureau/games/raycaster -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -fPIC -o CMakeFiles/raycaster_plugin.dir/raycaster/plugin.c.o -c /home/adrien/Bureau/games/raycaster/plugin.c",
+  "file": "/home/adrien/Bureau/games/raycaster/plugin.c",
+  "output": "CMakeFiles/raycaster_plugin.dir/raycaster/plugin.c.o"
 },
 {
   "directory": "/home/adrien/Bureau/games/build",
-  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/hotreload -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/hotreload.dir/hotreload/hotreload.c.o -c /home/adrien/Bureau/games/hotreload/hotreload.c",
-  "file": "/home/adrien/Bureau/games/hotreload/hotreload.c",
-  "output": "CMakeFiles/hotreload.dir/hotreload/hotreload.c.o"
+  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/raycaster -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/raycaster.dir/raycaster/raycaster.c.o -c /home/adrien/Bureau/games/raycaster/raycaster.c",
+  "file": "/home/adrien/Bureau/games/raycaster/raycaster.c",
+  "output": "CMakeFiles/raycaster.dir/raycaster/raycaster.c.o"
 },
 {
   "directory": "/home/adrien/Bureau/games/build",
-  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/hotreload -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/hotreload.dir/shared/utils.c.o -c /home/adrien/Bureau/games/shared/utils.c",
+  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/raycaster -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/raycaster.dir/shared/utils.c.o -c /home/adrien/Bureau/games/shared/utils.c",
   "file": "/home/adrien/Bureau/games/shared/utils.c",
-  "output": "CMakeFiles/hotreload.dir/shared/utils.c.o"
+  "output": "CMakeFiles/raycaster.dir/shared/utils.c.o"
 },
 {
   "directory": "/home/adrien/Bureau/games/build",
-  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/hotreload -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/hotreload.dir/shared/hotreload.c.o -c /home/adrien/Bureau/games/shared/hotreload.c",
+  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/raycaster -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/raycaster.dir/shared/hotreload.c.o -c /home/adrien/Bureau/games/shared/hotreload.c",
   "file": "/home/adrien/Bureau/games/shared/hotreload.c",
-  "output": "CMakeFiles/hotreload.dir/shared/hotreload.c.o"
-},
-{
-  "directory": "/home/adrien/Bureau/games/build",
-  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -Dvector_plugin_EXPORTS -I/home/adrien/Bureau/games/vector -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -fPIC -o CMakeFiles/vector_plugin.dir/vector/plugin.c.o -c /home/adrien/Bureau/games/vector/plugin.c",
-  "file": "/home/adrien/Bureau/games/vector/plugin.c",
-  "output": "CMakeFiles/vector_plugin.dir/vector/plugin.c.o"
-},
-{
-  "directory": "/home/adrien/Bureau/games/build",
-  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/vector -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/vector.dir/vector/vector.c.o -c /home/adrien/Bureau/games/vector/vector.c",
-  "file": "/home/adrien/Bureau/games/vector/vector.c",
-  "output": "CMakeFiles/vector.dir/vector/vector.c.o"
-},
-{
-  "directory": "/home/adrien/Bureau/games/build",
-  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/vector -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/vector.dir/shared/utils.c.o -c /home/adrien/Bureau/games/shared/utils.c",
-  "file": "/home/adrien/Bureau/games/shared/utils.c",
-  "output": "CMakeFiles/vector.dir/shared/utils.c.o"
-},
-{
-  "directory": "/home/adrien/Bureau/games/build",
-  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/vector -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/vector.dir/shared/hotreload.c.o -c /home/adrien/Bureau/games/shared/hotreload.c",
-  "file": "/home/adrien/Bureau/games/shared/hotreload.c",
-  "output": "CMakeFiles/vector.dir/shared/hotreload.c.o"
+  "output": "CMakeFiles/raycaster.dir/shared/hotreload.c.o"
 },
 {
   "directory": "/home/adrien/Bureau/games/build",

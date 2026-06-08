@@ -4,6 +4,7 @@
 #define PLUGIN_API __attribute__((visibility("default")))
 
 #include "hotreload.h"
+#include "raycaster.h"
 
 PLUGIN_API int Draw(void *ctx);
 

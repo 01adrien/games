@@ -147,5 +147,5 @@ target_link_libraries(trigo raylib m)
 # HOTRELOAD
 # =========================
 
-add_hot_game(hotreload)
-add_hot_game(vector)
+# add_hot_game(vector)
+add_hot_game(raycaster)

@@ -6,10 +6,6 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
-#include <raylib.h>
-#include <stddef.h>
-#include <dlfcn.h>
-#include <time.h>
 
 double degToRad(int deg);
 #endif // UTILS_H
