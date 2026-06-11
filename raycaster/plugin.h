@@ -7,5 +7,6 @@
 #include "raycaster.h"
 
 PLUGIN_API int Draw(void *ctx);
+PLUGIN_API int Update(void *ctx, float dt);
 
 #endif // PLUGIN_H

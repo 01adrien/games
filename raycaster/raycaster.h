@@ -11,6 +11,20 @@
 #define TILE_SIZE 20
 #define PLAYER_RADIUS 5
 #define PLAYER_SPEED 8
+#define PLAYER_FOV (PI / 6)
+
+typedef enum direction
+{
+    VEC_LEFT,
+    VEC_RIGHT,
+    VEC_UP,
+    VEC_BOTTOM,
+} Direction;
+
+typedef struct vectorDirection
+{
+    Direction x, y;
+} VectorDirection;
 
 typedef enum tileType
 {
@@ -46,7 +60,13 @@ typedef struct player
     Vector2 vel;
     float angle;
     int radius;
+    int fov;
 } Player;
+
+typedef struct mapIndex
+{
+    int h, w;
+} TileIndex;
 
 typedef struct gameContext
 {
