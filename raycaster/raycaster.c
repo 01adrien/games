@@ -46,7 +46,6 @@ void setupContext(GameContext *ctx)
     ctx->player.move.rot = ROT_NONE;
     ctx->player.move.dir = DIR_NONE;
     ctx->player.radius = PLAYER_RADIUS;
-    ctx->player.fov = PI / 6;
 }
 
 int main(int argc, char const *argv[])

@@ -108,10 +108,10 @@ void movePlayer(GameContext *ctx)
         p->vel = Vector2Negate(p->dir);
 
     if (p->move.rot == ROT_RIGHT)
-        p->angle += 0.05f;
+        p->angle += 0.1;
 
     else if (p->move.rot == ROT_LEFT)
-        p->angle -= 0.05f;
+        p->angle -= 0.1f;
 
     p->dir = Vector2Normalize((Vector2){cosf(p->angle), sinf(p->angle)});
 
@@ -165,7 +165,20 @@ void drawPlayer(GameContext *ctx)
     DrawCircleV(p.pos, radius, BLUE);
 }
 
-void rayCasting(GameContext *ctx)
+bool hitWall(Vector2 startRay, Vector2 endRay, GameContext *ctx)
+{
+    TileIndex current = posToIndex(endRay, ctx);
+    Vector2 tilePos = indexToPos(current, ctx);
+
+    TileIndex frontier = {
+        .h = tilePos.y == endRay.y ? current.h - 1 : current.h,
+        .w = tilePos.x == endRay.x ? current.w - 1 : current.w,
+    };
+
+    return getMapTile(current, ctx) == TILE_WALL || getMapTile(frontier, ctx) == TILE_WALL;
+}
+
+void raycast(GameContext *ctx, float angle)
 {
     float len;
     int sign;
@@ -177,46 +190,54 @@ void rayCasting(GameContext *ctx)
     sign = 1;
     cornerSquare = indexToPos(pTile, ctx);
     endX = p->pos;
-    if (p->dir.x >= 0)
+
+    Vector2 dir = {cosf(angle), sinf(angle)};
+
+    if (dir.x >= 0)
     {
         cornerSquare.x += TILE_SIZE;
         sign = -1;
     }
 
-    while (getMapTile(posToIndex(endX, ctx), ctx) != TILE_WALL)
+    while (!hitWall(p->pos, endX, ctx))
     {
         adjX = (Vector2){.x = cornerSquare.x, .y = p->pos.y};
         len = Vector2Length(Vector2Subtract(p->pos, adjX));
-        endX = (Vector2){.x = cornerSquare.x, .y = adjX.y - (tanf(p->angle * sign) * len)};
+        endX = (Vector2){.x = cornerSquare.x, .y = adjX.y - (tanf(angle * sign) * len)};
         cornerSquare.x += (-sign) * TILE_SIZE;
     }
 
     // Raycast Y
+
     sign = 1;
     cornerSquare = indexToPos(pTile, ctx);
     endY = p->pos;
-    if (p->dir.y >= 0) // BOTTOM
+    if (dir.y >= 0) // BOTTOM
     {
         cornerSquare.y += TILE_SIZE;
         sign = -1;
     }
-    while (getMapTile(posToIndex(endY, ctx), ctx) != TILE_WALL)
+    while (!hitWall(p->pos, endY, ctx))
     {
         adjY = (Vector2){.x = p->pos.x, .y = cornerSquare.y};
         len = Vector2Length(Vector2Subtract(p->pos, adjY));
-        endY = (Vector2){.x = adjY.x + (tan((p->angle + PI / 2) * sign) * len), .y = cornerSquare.y};
+        endY = (Vector2){.x = adjY.x + (tan((angle + PI / 2) * sign) * len), .y = cornerSquare.y};
         cornerSquare.y += (-sign) * TILE_SIZE;
     }
-    Vector2 perp = (Vector2){
-        -p->dir.y,
-        p->dir.x};
 
-    float offset = 2;
+    float distX = Vector2Length(Vector2Subtract(endX, p->pos));
+    float distY = Vector2Length(Vector2Subtract(endY, p->pos));
+    DrawLineV(p->pos, distX > distY ? endY : endX, BLUE);
+}
 
-    Vector2 start2 = Vector2Add(p->pos, Vector2Scale(perp, offset));
+void fov(GameContext *ctx)
+{
+    Player p = ctx->player;
 
-    DrawLineEx(p->pos, endX, 2, BLUE);
-    DrawLineEx(start2, Vector2Add(endY, Vector2Scale(perp, offset)), 2, RED);
+    for (float i = PLAYER_FOV; i > -PLAYER_FOV; i -= 0.01)
+    {
+        raycast(ctx, p.angle + i);
+    }
 }
 
 void gameLoop(GameContext *ctx)
@@ -224,7 +245,7 @@ void gameLoop(GameContext *ctx)
     handleInput(ctx);
     drawMap(ctx);
     movePlayer(ctx);
-    rayCasting(ctx);
+    fov(ctx);
     drawPlayer(ctx);
 }
 
