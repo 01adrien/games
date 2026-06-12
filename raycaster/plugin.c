@@ -25,14 +25,9 @@ int _posToIndex(float p, float mapCorner)
     if (index < 0)
         index = 0;
     else if (index > MAP_HEIGHT)
-    {
-        index = MAP_HEIGHT;
-    }
+        index = MAP_HEIGHT - 1;
     else if (index > MAP_WIDTH)
-    {
-        index = MAP_WIDTH;
-    }
-
+        index = MAP_WIDTH - 1;
     return index;
 }
 
@@ -113,10 +108,10 @@ void movePlayer(GameContext *ctx)
         p->vel = Vector2Negate(p->dir);
 
     if (p->move.rot == ROT_RIGHT)
-        p->angle += 0.1;
+        p->angle += 0.05f;
 
     else if (p->move.rot == ROT_LEFT)
-        p->angle -= 0.1;
+        p->angle -= 0.05f;
 
     p->dir = Vector2Normalize((Vector2){cosf(p->angle), sinf(p->angle)});
 
@@ -212,11 +207,16 @@ void rayCasting(GameContext *ctx)
         endY = (Vector2){.x = adjY.x + (tan((p->angle + PI / 2) * sign) * len), .y = cornerSquare.y};
         cornerSquare.y += (-sign) * TILE_SIZE;
     }
+    Vector2 perp = (Vector2){
+        -p->dir.y,
+        p->dir.x};
 
-    float distY = Vector2Length(Vector2Subtract(endY, p->pos));
-    float distX = Vector2Length(Vector2Subtract(endX, p->pos));
+    float offset = 2;
 
-    DrawLineV(p->pos, distX > distY ? endY : endX, BLUE);
+    Vector2 start2 = Vector2Add(p->pos, Vector2Scale(perp, offset));
+
+    DrawLineEx(p->pos, endX, 2, BLUE);
+    DrawLineEx(start2, Vector2Add(endY, Vector2Scale(perp, offset)), 2, RED);
 }
 
 void gameLoop(GameContext *ctx)
