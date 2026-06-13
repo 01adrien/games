@@ -1,7 +1,13 @@
 #include "plugin.h"
 #include "raycaster.h"
 
-#define DEBUG
+typedef struct rayInfo
+{
+    float length;
+    int side;
+} RayInfo;
+
+RayInfo buffer[PLAYER_SCREEN_WIDTH] = {0};
 
 void handleInput(GameContext *ctx)
 {
@@ -51,30 +57,19 @@ TileType getMapTile(TileIndex index, GameContext *ctx)
     return (TileType)ctx->map[index.h * MAP_WIDTH + index.w];
 }
 
-VectorDirection vectorDir(Vector2 vector)
-{
-    VectorDirection direction;
-    if (vector.x)
-    {
-        /* code */
-    }
-
-    return direction;
-}
-
 bool checkColisionPlayer(GameContext *ctx, Vector2 *vel)
 {
     int w, h, w1, h1, w2, h2, wp, hp;
     Rectangle tile;
     Player p = ctx->player;
-    Vector2 nextMove = Vector2Add(p.pos, Vector2Scale(p.vel, p.radius + 10));
+    Vector2 nextMove = Vector2Add(p.pos, Vector2Scale(p.vel, p.radius + 8));
     TileIndex pTile = posToIndex(nextMove, ctx);
 
-    if (getMapTile(pTile, ctx) == TILE_WALL)
+    if (getMapTile(pTile, ctx) > TILE_EMPTY)
     {
         // On teste l'axe X et Y pour voir si il y a possibilité de slider contre le mur
-        Vector2 checkX = {.x = p.pos.x + p.vel.x * (p.radius + 10), .y = p.pos.y};
-        Vector2 checkY = {.x = p.pos.x, .y = p.pos.y + p.vel.y * (p.radius + 10)};
+        Vector2 checkX = {.x = p.pos.x + p.vel.x * (p.radius + 8), .y = p.pos.y};
+        Vector2 checkY = {.x = p.pos.x, .y = p.pos.y + p.vel.y * (p.radius + 8)};
         TileIndex pTileX = posToIndex(checkX, ctx);
         TileIndex pTileY = posToIndex(checkY, ctx);
 
@@ -85,9 +80,9 @@ bool checkColisionPlayer(GameContext *ctx, Vector2 *vel)
         DrawRectangleV(indexToPos(pTileY, ctx), tileSize, YELLOW);
 #endif
 
-        if (getMapTile(pTileX, ctx) != TILE_WALL)
+        if (getMapTile(pTileX, ctx) == TILE_EMPTY)
             *vel = Vector2Normalize(Vector2Subtract(checkX, p.pos));
-        else if (getMapTile(pTileY, ctx) != TILE_WALL)
+        else if (getMapTile(pTileY, ctx) == TILE_EMPTY)
             *vel = Vector2Normalize(Vector2Subtract(checkY, p.pos));
 
         return true;
@@ -108,10 +103,10 @@ void movePlayer(GameContext *ctx)
         p->vel = Vector2Negate(p->dir);
 
     if (p->move.rot == ROT_RIGHT)
-        p->angle += 0.1;
+        p->angle += 0.15;
 
     else if (p->move.rot == ROT_LEFT)
-        p->angle -= 0.1f;
+        p->angle -= 0.15;
 
     p->dir = Vector2Normalize((Vector2){cosf(p->angle), sinf(p->angle)});
 
@@ -125,8 +120,6 @@ void movePlayer(GameContext *ctx)
     p->pos = Vector2Add(p->pos, Vector2Scale(p->vel, PLAYER_SPEED));
 }
 
-// DRAW FUNCTION
-
 void drawTile(TileType type, int x, int y)
 {
     switch (type)
@@ -134,9 +127,8 @@ void drawTile(TileType type, int x, int y)
     case TILE_EMPTY:
         DrawRectangleLines(x, y, TILE_SIZE, TILE_SIZE, RED);
         break;
-    case TILE_WALL:
-        DrawRectangle(x, y, TILE_SIZE, TILE_SIZE, BLACK);
     default:
+        DrawRectangle(x, y, TILE_SIZE, TILE_SIZE, BLACK);
         break;
     }
 }
@@ -161,8 +153,25 @@ void drawPlayer(GameContext *ctx)
     Player p = ctx->player;
     int radius = PLAYER_RADIUS;
     float angle = 2.4;
-    DrawLineEx(p.pos, Vector2Add(p.pos, Vector2Scale(p.dir, p.radius * 1.5)), 5, BLACK);
-    DrawCircleV(p.pos, radius, BLUE);
+    DrawCircleV(p.pos, radius, BLACK);
+}
+
+void draw3D(GameContext *ctx)
+{
+    Rectangle screen = ctx->player.screen;
+    Vector2 corner = {.x = screen.x + 1, .y = screen.y};
+    // DrawRectangleRec(screen, Fade(BLUE, .4));
+    // DrawRectangle(screen.x, screen.y + screen.height / 2, screen.width, screen.height / 2, Fade(WHITE, 1));
+    for (size_t i = 0; i < PLAYER_SCREEN_WIDTH; i++)
+    {
+        RayInfo ray = buffer[i];
+        float h = MIN(8000 / ray.length, PLAYER_SCREEN_HEIGHT);
+        float gap = (PLAYER_SCREEN_HEIGHT - h) / 2;
+        Vector2 start = {.x = corner.x + i, .y = corner.y + gap};
+        Vector2 end = {.x = start.x, .y = start.y + h};
+        DrawLineV(start, end, Fade(BROWN, ray.side == -1 ? 1 : .8));
+    }
+    DrawRectangleLines(screen.x, screen.y, screen.width, screen.height, BLACK);
 }
 
 bool hitWall(Vector2 startRay, Vector2 endRay, GameContext *ctx)
@@ -175,19 +184,19 @@ bool hitWall(Vector2 startRay, Vector2 endRay, GameContext *ctx)
         .w = tilePos.x == endRay.x ? current.w - 1 : current.w,
     };
 
-    return getMapTile(current, ctx) == TILE_WALL || getMapTile(frontier, ctx) == TILE_WALL;
+    return getMapTile(current, ctx) > TILE_EMPTY || getMapTile(frontier, ctx) > TILE_EMPTY;
 }
 
-void raycast(GameContext *ctx, float angle)
+RayInfo raycast(GameContext *ctx, float angle)
 {
     float len;
-    int sign;
+    int signX, signY;
     Vector2 adjX, adjY, endX, endY, cornerSquare;
     Player *p = &ctx->player;
     TileIndex pTile = posToIndex(p->pos, ctx);
 
     // Raycast X
-    sign = 1;
+    signX = 1;
     cornerSquare = indexToPos(pTile, ctx);
     endX = p->pos;
 
@@ -196,47 +205,70 @@ void raycast(GameContext *ctx, float angle)
     if (dir.x >= 0)
     {
         cornerSquare.x += TILE_SIZE;
-        sign = -1;
+        signX = -1;
     }
 
     while (!hitWall(p->pos, endX, ctx))
     {
         adjX = (Vector2){.x = cornerSquare.x, .y = p->pos.y};
         len = Vector2Length(Vector2Subtract(p->pos, adjX));
-        endX = (Vector2){.x = cornerSquare.x, .y = adjX.y - (tanf(angle * sign) * len)};
-        cornerSquare.x += (-sign) * TILE_SIZE;
+        endX = (Vector2){.x = cornerSquare.x, .y = adjX.y - (tanf(angle * signX) * len)};
+        cornerSquare.x += (-signX) * TILE_SIZE;
     }
 
     // Raycast Y
 
-    sign = 1;
+    signY = 1;
     cornerSquare = indexToPos(pTile, ctx);
     endY = p->pos;
     if (dir.y >= 0) // BOTTOM
     {
         cornerSquare.y += TILE_SIZE;
-        sign = -1;
+        signY = -1;
     }
     while (!hitWall(p->pos, endY, ctx))
     {
         adjY = (Vector2){.x = p->pos.x, .y = cornerSquare.y};
         len = Vector2Length(Vector2Subtract(p->pos, adjY));
-        endY = (Vector2){.x = adjY.x + (tan((angle + PI / 2) * sign) * len), .y = cornerSquare.y};
-        cornerSquare.y += (-sign) * TILE_SIZE;
+        endY = (Vector2){.x = adjY.x + (tan((angle + PI / 2) * signY) * len), .y = cornerSquare.y};
+        cornerSquare.y += (-signY) * TILE_SIZE;
     }
 
     float distX = Vector2Length(Vector2Subtract(endX, p->pos));
     float distY = Vector2Length(Vector2Subtract(endY, p->pos));
     DrawLineV(p->pos, distX > distY ? endY : endX, BLUE);
+    float dist = MIN(distX, distY);
+    return (RayInfo){.length = dist, .side = distX > distY ? signY : signX};
 }
 
 void fov(GameContext *ctx)
 {
-    Player p = ctx->player;
 
-    for (float i = PLAYER_FOV; i > -PLAYER_FOV; i -= 0.01)
+    Player p = ctx->player;
+    memset(buffer, 0, PLAYER_SCREEN_WIDTH);
+    // largeur du champ de vision (contrôle le "zoom" de la caméra)
+    float planeSize = tanf(PLAYER_FOV * 0.5f);
+
+    // vecteur perpendiculaire à la direction du joueur
+    // représente la "largeur de l'écran" dans le monde
+    Vector2 plane = {
+        .x = -p.dir.y * planeSize,
+        .y = p.dir.x * planeSize};
+
+    // angle du rayon le plus à gauche du champ de vision
+    float start = p.angle - (PLAYER_FOV * 0.5f);
+
+    for (int x = 0; x < PLAYER_SCREEN_WIDTH; x++)
     {
-        raycast(ctx, p.angle + i);
+        // position du pixel sur l'écran (-1 gauche → +1 droite)
+        float cameraX = ((2.0f * x) / PLAYER_SCREEN_WIDTH) - 1.0f;
+
+        // direction du rayon basée sur l'écran virtuel (camera plane)
+        Vector2 rayDir = Vector2Add(p.dir, Vector2Scale(plane, cameraX));
+        // float angle = atan2f(rayDir.y, rayDir.x);
+        // version alternative : calcul direct en angles (plus simple mais moins "engine-like")
+        float angle = start + ((PLAYER_FOV * x) / PLAYER_SCREEN_WIDTH);
+        buffer[x] = raycast(ctx, angle);
     }
 }
 
@@ -247,6 +279,7 @@ void gameLoop(GameContext *ctx)
     movePlayer(ctx);
     fov(ctx);
     drawPlayer(ctx);
+    draw3D(ctx);
 }
 
 int Draw(void *ctx)

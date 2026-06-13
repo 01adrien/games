@@ -6,11 +6,11 @@ int worldMap[MAP_HEIGHT][MAP_WIDTH] =
         {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
         {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
         {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1},
-        {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1},
-        {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1},
+        {1, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1},
+        {1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+        {1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1},
+        {1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+        {1, 0, 0, 0, 0, 0, 2, 2, 0, 2, 2, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1},
         {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
         {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
         {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -31,8 +31,12 @@ int worldMap[MAP_HEIGHT][MAP_WIDTH] =
 void setupContext(GameContext *ctx)
 {
     // Setup map
-    int xMap = (WIDTH - MAP_WIDTH * TILE_SIZE) / 2;
-    int yMap = (HEIGHT - MAP_HEIGHT * TILE_SIZE) / 2;
+
+    int xgap = ((WIDTH - (MAP_WIDTH * TILE_SIZE + PLAYER_SCREEN_WIDTH))) / 3;
+    int ygap = ((HEIGHT - (MAP_HEIGHT * TILE_SIZE))) / 2;
+
+    int xMap = xgap;
+    int yMap = ygap;
     ctx->mapPos = (Vector2){.x = xMap, .y = yMap};
     ctx->map = &worldMap[0][0];
 
@@ -46,6 +50,12 @@ void setupContext(GameContext *ctx)
     ctx->player.move.rot = ROT_NONE;
     ctx->player.move.dir = DIR_NONE;
     ctx->player.radius = PLAYER_RADIUS;
+    ctx->player.screen = (Rectangle){
+        .x = xgap + MAP_WIDTH * TILE_SIZE + xgap,
+        .y = (HEIGHT - PLAYER_SCREEN_HEIGHT) / 2,
+        .width = PLAYER_SCREEN_WIDTH,
+        .height = PLAYER_SCREEN_HEIGHT,
+    };
 }
 
 int main(int argc, char const *argv[])
