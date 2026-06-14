@@ -8,14 +8,15 @@
 #define HEIGHT 600
 #define MAP_WIDTH 24
 #define MAP_HEIGHT 24
-#define TILE_SIZE 10
-#define PLAYER_RADIUS 3
-#define PLAYER_SPEED 8
+#define TILE_SIZE 64
+#define MAP_SCALE 0.0625f
+#define PLAYER_RADIUS 50
+#define PLAYER_SPEED 20
 #define PLAYER_FOV (PI / 3)
 #define PLAYER_HIGH 32
 #define WALL_HIGH (PLAYER_HIGH * 2)
-#define PLAYER_SCREEN_WIDTH 520
-#define PLAYER_SCREEN_HEIGHT 420
+#define PLAYER_SCREEN_WIDTH WIDTH
+#define PLAYER_SCREEN_HEIGHT HEIGHT
 
 // #define DEBUG
 
@@ -25,10 +26,18 @@
 typedef enum tileType
 {
     TILE_EMPTY,
-    TILE_WALL,
-    TILE_WALL2,
-    TILE_WALL3,
+    TILE_BLUESTONE,
+    TILE_WOOD,
+    TILE_COLORSTONE,
+    TILE_GREYSTONE,
+    TILE_BRICK,
+    TILE_EAGLE,
+    TILE_COUNT,
 } TileType;
+
+Color WALL_LIGHT = {245, 242, 235, 255};
+Color WALL_SHADOW = {155, 120, 85, 255};
+Color FOV_COLOR = {255, 215, 0, 3};
 
 typedef enum playerDirection
 {
@@ -71,6 +80,7 @@ typedef struct gameContext
     int *map;
     Player player;
     Vector2 mapPos;
+    Texture2D textures[TILE_COUNT];
 } GameContext;
 
 void setupContext(GameContext *ctx);

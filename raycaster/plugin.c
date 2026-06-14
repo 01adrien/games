@@ -5,9 +5,12 @@ typedef struct rayInfo
 {
     float length;
     int side;
+    TileType tile;
+    int textureOffset;
+    Vector2 hit;
 } RayInfo;
 
-RayInfo buffer[PLAYER_SCREEN_WIDTH] = {0};
+RayInfo buffer[PLAYER_SCREEN_WIDTH];
 
 void handleInput(GameContext *ctx)
 {
@@ -120,61 +123,7 @@ void movePlayer(GameContext *ctx)
     p->pos = Vector2Add(p->pos, Vector2Scale(p->vel, PLAYER_SPEED));
 }
 
-void drawTile(TileType type, int x, int y)
-{
-    switch (type)
-    {
-    case TILE_EMPTY:
-        DrawRectangleLines(x, y, TILE_SIZE, TILE_SIZE, RED);
-        break;
-    default:
-        DrawRectangle(x, y, TILE_SIZE, TILE_SIZE, BLACK);
-        break;
-    }
-}
-
-void drawMap(GameContext *ctx)
-{
-    int x, y;
-
-    for (size_t i = 0; i < MAP_HEIGHT; i++)
-    {
-        for (size_t j = 0; j < MAP_WIDTH; j++)
-        {
-            y = i * TILE_SIZE + ctx->mapPos.y;
-            x = j * TILE_SIZE + ctx->mapPos.x;
-            drawTile((TileType)ctx->map[i * MAP_WIDTH + j], x, y);
-        }
-    }
-}
-
-void drawPlayer(GameContext *ctx)
-{
-    Player p = ctx->player;
-    int radius = PLAYER_RADIUS;
-    float angle = 2.4;
-    DrawCircleV(p.pos, radius, BLACK);
-}
-
-void draw3D(GameContext *ctx)
-{
-    Rectangle screen = ctx->player.screen;
-    Vector2 corner = {.x = screen.x + 1, .y = screen.y};
-    // DrawRectangleRec(screen, Fade(BLUE, .4));
-    // DrawRectangle(screen.x, screen.y + screen.height / 2, screen.width, screen.height / 2, Fade(WHITE, 1));
-    for (size_t i = 0; i < PLAYER_SCREEN_WIDTH; i++)
-    {
-        RayInfo ray = buffer[i];
-        float h = MIN(8000 / ray.length, PLAYER_SCREEN_HEIGHT);
-        float gap = (PLAYER_SCREEN_HEIGHT - h) / 2;
-        Vector2 start = {.x = corner.x + i, .y = corner.y + gap};
-        Vector2 end = {.x = start.x, .y = start.y + h};
-        DrawLineV(start, end, Fade(BROWN, ray.side == -1 ? 1 : .8));
-    }
-    DrawRectangleLines(screen.x, screen.y, screen.width, screen.height, BLACK);
-}
-
-bool hitWall(Vector2 startRay, Vector2 endRay, GameContext *ctx)
+bool hitWall(Vector2 startRay, Vector2 endRay, GameContext *ctx, TileType *tile)
 {
     TileIndex current = posToIndex(endRay, ctx);
     Vector2 tilePos = indexToPos(current, ctx);
@@ -184,13 +133,19 @@ bool hitWall(Vector2 startRay, Vector2 endRay, GameContext *ctx)
         .w = tilePos.x == endRay.x ? current.w - 1 : current.w,
     };
 
-    return getMapTile(current, ctx) > TILE_EMPTY || getMapTile(frontier, ctx) > TILE_EMPTY;
+    TileType t1 = getMapTile(current, ctx);
+    TileType t2 = getMapTile(frontier, ctx);
+
+    *tile = MAX(t1, t2);
+
+    return t1 > TILE_EMPTY || t2 > TILE_EMPTY;
 }
 
 RayInfo raycast(GameContext *ctx, float angle)
 {
     float len;
     int signX, signY;
+    TileType tileX, tileY;
     Vector2 adjX, adjY, endX, endY, cornerSquare;
     Player *p = &ctx->player;
     TileIndex pTile = posToIndex(p->pos, ctx);
@@ -208,7 +163,7 @@ RayInfo raycast(GameContext *ctx, float angle)
         signX = -1;
     }
 
-    while (!hitWall(p->pos, endX, ctx))
+    while (!hitWall(p->pos, endX, ctx, &tileX))
     {
         adjX = (Vector2){.x = cornerSquare.x, .y = p->pos.y};
         len = Vector2Length(Vector2Subtract(p->pos, adjX));
@@ -226,7 +181,7 @@ RayInfo raycast(GameContext *ctx, float angle)
         cornerSquare.y += TILE_SIZE;
         signY = -1;
     }
-    while (!hitWall(p->pos, endY, ctx))
+    while (!hitWall(p->pos, endY, ctx, &tileY))
     {
         adjY = (Vector2){.x = p->pos.x, .y = cornerSquare.y};
         len = Vector2Length(Vector2Subtract(p->pos, adjY));
@@ -236,50 +191,76 @@ RayInfo raycast(GameContext *ctx, float angle)
 
     float distX = Vector2Length(Vector2Subtract(endX, p->pos));
     float distY = Vector2Length(Vector2Subtract(endY, p->pos));
-    DrawLineV(p->pos, distX > distY ? endY : endX, BLUE);
     float dist = MIN(distX, distY);
-    return (RayInfo){.length = dist, .side = distX > distY ? signY : signX};
+
+    return (RayInfo){
+        .length = dist,
+        .side = distX > distY ? 1 : -1,
+        .tile = distX > distY ? tileY : tileX,
+        .textureOffset = distX > distY ? (int)(endY.x) % 64 : (int)(endX.y) % 64,
+        .hit = distX > distY ? endY : endX,
+    };
 }
 
-void fov(GameContext *ctx)
+void draw(GameContext *ctx)
 {
 
+    memset(&buffer, 0, PLAYER_SCREEN_WIDTH);
+
     Player p = ctx->player;
-    memset(buffer, 0, PLAYER_SCREEN_WIDTH);
-    // largeur du champ de vision (contrôle le "zoom" de la caméra)
-    float planeSize = tanf(PLAYER_FOV * 0.5f);
 
-    // vecteur perpendiculaire à la direction du joueur
-    // représente la "largeur de l'écran" dans le monde
-    Vector2 plane = {
-        .x = -p.dir.y * planeSize,
-        .y = p.dir.x * planeSize};
-
-    // angle du rayon le plus à gauche du champ de vision
+    // DRAW 3D
     float start = p.angle - (PLAYER_FOV * 0.5f);
-
+    Rectangle screen = ctx->player.screen;
+    Vector2 corner = {.x = screen.x + 1, .y = screen.y};
     for (int x = 0; x < PLAYER_SCREEN_WIDTH; x++)
     {
-        // position du pixel sur l'écran (-1 gauche → +1 droite)
-        float cameraX = ((2.0f * x) / PLAYER_SCREEN_WIDTH) - 1.0f;
-
-        // direction du rayon basée sur l'écran virtuel (camera plane)
-        Vector2 rayDir = Vector2Add(p.dir, Vector2Scale(plane, cameraX));
-        // float angle = atan2f(rayDir.y, rayDir.x);
-        // version alternative : calcul direct en angles (plus simple mais moins "engine-like")
         float angle = start + ((PLAYER_FOV * x) / PLAYER_SCREEN_WIDTH);
-        buffer[x] = raycast(ctx, angle);
+        RayInfo ray = raycast(ctx, angle);
+        buffer[x] = ray;
+        float h = MIN(50000 / ray.length, PLAYER_SCREEN_HEIGHT);
+        float gap = (PLAYER_SCREEN_HEIGHT - h) / 2;
+        Vector2 start = {.x = corner.x + x, .y = corner.y + gap};
+        Vector2 end = {.x = start.x, .y = start.y + h};
+
+        Rectangle src = {.x = ray.textureOffset, .y = 0, .width = 1, .height = 64};
+        Rectangle dst = {.x = start.x, .y = start.y, .width = 1, .height = h};
+        DrawTexturePro(
+            ctx->textures[ray.tile],
+            src,
+            dst,
+            (Vector2){0, 0},
+            0,
+            ray.side == -1 ? WALL_SHADOW : WALL_LIGHT);
     }
+
+    // DRAW MINI MAP
+    int x, y;
+    for (size_t i = 0; i < MAP_HEIGHT; i++)
+    {
+        for (size_t j = 0; j < MAP_WIDTH; j++)
+        {
+            y = (i * TILE_SIZE + ctx->mapPos.y) * MAP_SCALE;
+            x = (j * TILE_SIZE + ctx->mapPos.x) * MAP_SCALE;
+
+            TileType tile = (TileType)ctx->map[i * MAP_WIDTH + j];
+
+            DrawRectangle(x, y, TILE_SIZE * MAP_SCALE, TILE_SIZE * MAP_SCALE, tile > 0 ? BLACK : RAYWHITE);
+        }
+    }
+
+    // DRAW PLAYER
+    for (size_t i = 0; i < PLAYER_SCREEN_WIDTH; i++)
+        DrawLineV(Vector2Scale(p.pos, MAP_SCALE), Vector2Scale(buffer[i].hit, MAP_SCALE), FOV_COLOR);
+
+    DrawCircleV(Vector2Scale(p.pos, MAP_SCALE), PLAYER_RADIUS * MAP_SCALE, Fade(RED, .6));
 }
 
 void gameLoop(GameContext *ctx)
 {
     handleInput(ctx);
-    drawMap(ctx);
     movePlayer(ctx);
-    fov(ctx);
-    drawPlayer(ctx);
-    draw3D(ctx);
+    draw(ctx);
 }
 
 int Draw(void *ctx)
