@@ -77,6 +77,7 @@ int main(int argc, char const *argv[])
     GameContext ctx;
 
     setupContext(&ctx);
+    SetTargetFPS(40);
 
     if (reload_plugin(file, &lastPluginTime, &game, &plugin_handle))
         return 1;
@@ -89,6 +90,7 @@ int main(int argc, char const *argv[])
         BeginDrawing();
         ClearBackground(RAYWHITE);
         game(&ctx);
+        DrawFPS(10, HEIGHT - 30);
         EndDrawing();
     }
 

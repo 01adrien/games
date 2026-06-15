@@ -11,7 +11,8 @@
 #define TILE_SIZE 64
 #define MAP_SCALE 0.0625f
 #define PLAYER_RADIUS 50
-#define PLAYER_SPEED 25
+#define PLAYER_SPEED 15
+#define PLAYER_ROTATION 0.05
 #define PLAYER_FOV (PI / 3)
 #define PLAYER_HIGH 32
 #define WALL_HIGH (PLAYER_HIGH * 2)
@@ -37,7 +38,7 @@ typedef enum tileType
 
 Color WALL_LIGHT = {245, 242, 235, 255};
 Color WALL_SHADOW = {155, 120, 85, 255};
-Color FOV_COLOR = {255, 215, 0, 3};
+Color FOV_COLOR = {255, 215, 0, 5};
 
 typedef enum playerDirection
 {

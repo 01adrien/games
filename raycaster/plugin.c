@@ -97,10 +97,10 @@ void movePlayer(GameContext *ctx)
         p->vel = Vector2Negate(p->dir);
 
     if (p->move.rot == ROT_RIGHT)
-        p->angle += 0.15;
+        p->angle += PLAYER_ROTATION;
 
     else if (p->move.rot == ROT_LEFT)
-        p->angle -= 0.15;
+        p->angle -= PLAYER_ROTATION;
 
     p->dir = Vector2Normalize((Vector2){cosf(p->angle), sinf(p->angle)});
 
@@ -202,7 +202,7 @@ void draw(GameContext *ctx)
     float start = p.angle - (PLAYER_FOV * 0.5f);
     Vector2 corner = {.x = p.screen.x + 1, .y = p.screen.y};
 
-        // FLOOR & CEILLING
+    // FLOOR & CEILLING
     DrawRectangle(0, 0, PLAYER_SCREEN_WIDTH, PLAYER_SCREEN_HEIGHT / 2, BROWN);
     DrawRectangle(0, PLAYER_SCREEN_HEIGHT / 2, PLAYER_SCREEN_WIDTH, PLAYER_SCREEN_HEIGHT / 2, GRAY);
 
@@ -245,6 +245,7 @@ void draw(GameContext *ctx)
 
 void gameLoop(GameContext *ctx)
 {
+
     handleInput(ctx);
     movePlayer(ctx);
     draw(ctx);
