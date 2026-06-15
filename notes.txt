@@ -1,3 +1,0 @@
-- fisheye
-- texture zoom
-- fps / speed

@@ -184,8 +184,10 @@ RayInfo raycast(GameContext *ctx, float angle)
     float distY = Vector2Length(Vector2Subtract(endY, p->pos));
     float dist = MIN(distX, distY);
 
+    float perp = dist * cos(angle - p->angle);
+
     return (RayInfo){
-        .length = dist,
+        .length = perp,
         .side = distX > distY ? 1 : -1,
         .tile = distX > distY ? tileY : tileX,
         .textureOffset = distX > distY ? -((int)(endY.x) % 64) : (int)(endX.y) % 64,
@@ -210,7 +212,7 @@ void draw(GameContext *ctx)
     {
         float angle = start + ((PLAYER_FOV * x) / PLAYER_SCREEN_WIDTH);
         RayInfo ray = raycast(ctx, angle);
-        float h = MIN(80000 / ray.length, PLAYER_SCREEN_HEIGHT);
+        float h = MIN(ZOOM / ray.length, PLAYER_SCREEN_HEIGHT);
         float gap = (PLAYER_SCREEN_HEIGHT - h) / 2;
         Vector2 start = {.x = corner.x + x, .y = corner.y + gap};
         Vector2 end = {.x = start.x, .y = start.y + h};

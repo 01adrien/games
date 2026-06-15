@@ -4,8 +4,8 @@
 #include "utils.h"
 #include "plugin.h"
 
-#define WIDTH 700
-#define HEIGHT 400
+#define WIDTH 1000
+#define HEIGHT 600
 #define MAP_WIDTH 24
 #define MAP_HEIGHT 24
 #define TILE_SIZE 64
@@ -18,6 +18,7 @@
 #define WALL_HIGH (PLAYER_HIGH * 2)
 #define PLAYER_SCREEN_WIDTH WIDTH
 #define PLAYER_SCREEN_HEIGHT HEIGHT
+#define ZOOM 35000
 
 // #define DEBUG
 

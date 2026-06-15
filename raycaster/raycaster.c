@@ -27,6 +27,7 @@ int level1[24][24] = {
     {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
     {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
     {1, 1, 1, 1, 1, 6, 1, 1, 1, 1, 2, 6, 2, 1, 1, 1, 1, 1, 6, 1, 1, 1, 1, 1}};
+
 void setupContext(GameContext *ctx)
 {
     // Setup map
@@ -68,16 +69,15 @@ void setupContext(GameContext *ctx)
 int main(int argc, char const *argv[])
 {
     InitWindow(WIDTH, HEIGHT, "Raycaster");
-    SetTargetFPS(10);
+    SetTargetFPS(40);
 
     void *plugin_handle = NULL;
     DrawFuncPtr game = NULL;
     const char *file = "../build/raycaster_plugin.so";
     long lastPluginTime = 0;
-    GameContext ctx;
 
+    GameContext ctx;
     setupContext(&ctx);
-    SetTargetFPS(40);
 
     if (reload_plugin(file, &lastPluginTime, &game, &plugin_handle))
         return 1;
@@ -94,7 +94,7 @@ int main(int argc, char const *argv[])
         EndDrawing();
     }
 
-    for (size_t i = 0; i < TILE_COUNT; i++)
+    for (size_t i = 1; i < TILE_COUNT; i++)
     {
         UnloadTexture(ctx.textures[i]);
     }
