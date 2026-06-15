@@ -4,14 +4,14 @@
 #include "utils.h"
 #include "plugin.h"
 
-#define WIDTH 1200
-#define HEIGHT 600
+#define WIDTH 700
+#define HEIGHT 400
 #define MAP_WIDTH 24
 #define MAP_HEIGHT 24
 #define TILE_SIZE 64
 #define MAP_SCALE 0.0625f
 #define PLAYER_RADIUS 50
-#define PLAYER_SPEED 20
+#define PLAYER_SPEED 25
 #define PLAYER_FOV (PI / 3)
 #define PLAYER_HIGH 32
 #define WALL_HIGH (PLAYER_HIGH * 2)

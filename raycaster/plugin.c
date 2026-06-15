@@ -62,10 +62,9 @@ TileType getMapTile(TileIndex index, GameContext *ctx)
 
 bool checkColisionPlayer(GameContext *ctx, Vector2 *vel)
 {
-    int w, h, w1, h1, w2, h2, wp, hp;
     Rectangle tile;
     Player p = ctx->player;
-    Vector2 nextMove = Vector2Add(p.pos, Vector2Scale(p.vel, p.radius + 8));
+    Vector2 nextMove = Vector2Add(p.pos, Vector2Scale(p.vel, p.radius + 20));
     TileIndex pTile = posToIndex(nextMove, ctx);
 
     if (getMapTile(pTile, ctx) > TILE_EMPTY)
@@ -75,13 +74,6 @@ bool checkColisionPlayer(GameContext *ctx, Vector2 *vel)
         Vector2 checkY = {.x = p.pos.x, .y = p.pos.y + p.vel.y * (p.radius + 8)};
         TileIndex pTileX = posToIndex(checkX, ctx);
         TileIndex pTileY = posToIndex(checkY, ctx);
-
-#ifdef DEBUG
-        Vector2 tileSize = {TILE_SIZE, TILE_SIZE};
-        DrawRectangleV(indexToPos(pTile, ctx), tileSize, RED);
-        DrawRectangleV(indexToPos(pTileX, ctx), tileSize, GREEN);
-        DrawRectangleV(indexToPos(pTileY, ctx), tileSize, YELLOW);
-#endif
 
         if (getMapTile(pTileX, ctx) == TILE_EMPTY)
             *vel = Vector2Normalize(Vector2Subtract(checkX, p.pos));
@@ -96,7 +88,6 @@ bool checkColisionPlayer(GameContext *ctx, Vector2 *vel)
 void movePlayer(GameContext *ctx)
 {
     Player *p = &ctx->player;
-
     p->vel = (Vector2){0, 0};
 
     if (p->move.dir == DIR_UP)
@@ -197,41 +188,37 @@ RayInfo raycast(GameContext *ctx, float angle)
         .length = dist,
         .side = distX > distY ? 1 : -1,
         .tile = distX > distY ? tileY : tileX,
-        .textureOffset = distX > distY ? (int)(endY.x) % 64 : (int)(endX.y) % 64,
+        .textureOffset = distX > distY ? -((int)(endY.x) % 64) : (int)(endX.y) % 64,
         .hit = distX > distY ? endY : endX,
     };
 }
 
 void draw(GameContext *ctx)
 {
-
-    memset(&buffer, 0, PLAYER_SCREEN_WIDTH);
-
     Player p = ctx->player;
 
     // DRAW 3D
+    memset(&buffer, 0, PLAYER_SCREEN_WIDTH);
     float start = p.angle - (PLAYER_FOV * 0.5f);
-    Rectangle screen = ctx->player.screen;
-    Vector2 corner = {.x = screen.x + 1, .y = screen.y};
+    Vector2 corner = {.x = p.screen.x + 1, .y = p.screen.y};
+
+        // FLOOR & CEILLING
+    DrawRectangle(0, 0, PLAYER_SCREEN_WIDTH, PLAYER_SCREEN_HEIGHT / 2, BROWN);
+    DrawRectangle(0, PLAYER_SCREEN_HEIGHT / 2, PLAYER_SCREEN_WIDTH, PLAYER_SCREEN_HEIGHT / 2, GRAY);
+
     for (int x = 0; x < PLAYER_SCREEN_WIDTH; x++)
     {
         float angle = start + ((PLAYER_FOV * x) / PLAYER_SCREEN_WIDTH);
         RayInfo ray = raycast(ctx, angle);
-        buffer[x] = ray;
-        float h = MIN(50000 / ray.length, PLAYER_SCREEN_HEIGHT);
+        float h = MIN(80000 / ray.length, PLAYER_SCREEN_HEIGHT);
         float gap = (PLAYER_SCREEN_HEIGHT - h) / 2;
         Vector2 start = {.x = corner.x + x, .y = corner.y + gap};
         Vector2 end = {.x = start.x, .y = start.y + h};
-
         Rectangle src = {.x = ray.textureOffset, .y = 0, .width = 1, .height = 64};
         Rectangle dst = {.x = start.x, .y = start.y, .width = 1, .height = h};
-        DrawTexturePro(
-            ctx->textures[ray.tile],
-            src,
-            dst,
-            (Vector2){0, 0},
-            0,
-            ray.side == -1 ? WALL_SHADOW : WALL_LIGHT);
+        Color c = ray.side == -1 ? WALL_SHADOW : WALL_LIGHT;
+        DrawTexturePro(ctx->textures[ray.tile], src, dst, (Vector2){0, 0}, 0, c);
+        buffer[x] = ray;
     }
 
     // DRAW MINI MAP
