@@ -206,9 +206,8 @@ void draw(GameContext *ctx)
     // DRAW 3D
     memset(&buffer, 0, PLAYER_SCREEN_WIDTH);
     float startAngle = p.angle - (PLAYER_FOV * 0.5f);
-    Vector2 corner = {.x = p.screen.x + 1, .y = p.screen.y};
-
-    for (int x = 0; x < PLAYER_SCREEN_WIDTH; x++)
+    Vector2 corner = {.x = p.screen.x, .y = p.screen.y};
+    for (int x = -1; x < PLAYER_SCREEN_WIDTH + 1; x++)
     {
         float angle = startAngle + ((PLAYER_FOV * x) / PLAYER_SCREEN_WIDTH);
         RayInfo ray = raycast(ctx, angle);
@@ -219,8 +218,11 @@ void draw(GameContext *ctx)
         Rectangle src = {.x = ray.textureOffset, .y = 0, .width = 1, .height = 64};
         Rectangle dst = {.x = start.x, .y = start.y, .width = 1, .height = h};
 
-        float shade = MAX(.3f, 1.0f - (ray.length / (MAP_WIDTH * TILE_SIZE)));
-        Color c = ray.side == -1 ? WALL_SHADOW : WALL_LIGHT;
+        // FLOOR & CEILLING
+        DrawLineEx((Vector2){.x = dst.x, dst.y + dst.height}, (Vector2){.x = dst.x, .y = corner.y + PLAYER_SCREEN_HEIGHT}, 2, Fade(GREEN, .5));
+        DrawLineEx((Vector2){.x = corner.x + x, corner.y}, (Vector2){.x = corner.x + x, .y = corner.y + gap + 1}, 2, Fade(BLUE, .5));
+        float shade = MAX(.3f, 1.0f - (ray.length / (10 * TILE_SIZE)));
+        Color c = ray.side == -1 ? WALL_LIGHT : WALL_LIGHT;
         Color wallColor = {c.r * shade, c.g * shade, c.b * shade, c.r};
         DrawTexturePro(ctx->textures[ray.tile], src, dst, (Vector2){0, 0}, 0, wallColor);
         buffer[x] = ray;

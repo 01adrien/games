@@ -1,254 +1,254 @@
 [
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Desktop/games/pong -I/home/adrien/Desktop/games/shared -I/home/adrien/Desktop/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/pong.dir/pong/main.c.o -c /home/adrien/Desktop/games/pong/main.c",
-  "file": "/home/adrien/Desktop/games/pong/main.c",
-  "output": "/home/adrien/Desktop/games/build/CMakeFiles/pong.dir/pong/main.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/pong -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/pong.dir/pong/main.c.o -c /home/adrien/Bureau/games/pong/main.c",
+  "file": "/home/adrien/Bureau/games/pong/main.c",
+  "output": "CMakeFiles/pong.dir/pong/main.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Desktop/games/pong -I/home/adrien/Desktop/games/shared -I/home/adrien/Desktop/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/pong.dir/pong/pong.c.o -c /home/adrien/Desktop/games/pong/pong.c",
-  "file": "/home/adrien/Desktop/games/pong/pong.c",
-  "output": "/home/adrien/Desktop/games/build/CMakeFiles/pong.dir/pong/pong.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/pong -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/pong.dir/pong/pong.c.o -c /home/adrien/Bureau/games/pong/pong.c",
+  "file": "/home/adrien/Bureau/games/pong/pong.c",
+  "output": "CMakeFiles/pong.dir/pong/pong.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Desktop/games/pong -I/home/adrien/Desktop/games/shared -I/home/adrien/Desktop/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/pong.dir/shared/utils.c.o -c /home/adrien/Desktop/games/shared/utils.c",
-  "file": "/home/adrien/Desktop/games/shared/utils.c",
-  "output": "/home/adrien/Desktop/games/build/CMakeFiles/pong.dir/shared/utils.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/pong -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/pong.dir/shared/utils.c.o -c /home/adrien/Bureau/games/shared/utils.c",
+  "file": "/home/adrien/Bureau/games/shared/utils.c",
+  "output": "CMakeFiles/pong.dir/shared/utils.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Desktop/games/arkanoid -I/home/adrien/Desktop/games/shared -I/home/adrien/Desktop/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/arkanoid.dir/arkanoid/arkanoid.c.o -c /home/adrien/Desktop/games/arkanoid/arkanoid.c",
-  "file": "/home/adrien/Desktop/games/arkanoid/arkanoid.c",
-  "output": "/home/adrien/Desktop/games/build/CMakeFiles/arkanoid.dir/arkanoid/arkanoid.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/arkanoid -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/arkanoid.dir/arkanoid/arkanoid.c.o -c /home/adrien/Bureau/games/arkanoid/arkanoid.c",
+  "file": "/home/adrien/Bureau/games/arkanoid/arkanoid.c",
+  "output": "CMakeFiles/arkanoid.dir/arkanoid/arkanoid.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Desktop/games/arkanoid -I/home/adrien/Desktop/games/shared -I/home/adrien/Desktop/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/arkanoid.dir/shared/utils.c.o -c /home/adrien/Desktop/games/shared/utils.c",
-  "file": "/home/adrien/Desktop/games/shared/utils.c",
-  "output": "/home/adrien/Desktop/games/build/CMakeFiles/arkanoid.dir/shared/utils.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/arkanoid -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/arkanoid.dir/shared/utils.c.o -c /home/adrien/Bureau/games/shared/utils.c",
+  "file": "/home/adrien/Bureau/games/shared/utils.c",
+  "output": "CMakeFiles/arkanoid.dir/shared/utils.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Desktop/games/pool -I/home/adrien/Desktop/games/shared -I/home/adrien/Desktop/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/pool.dir/pool/pool.c.o -c /home/adrien/Desktop/games/pool/pool.c",
-  "file": "/home/adrien/Desktop/games/pool/pool.c",
-  "output": "/home/adrien/Desktop/games/build/CMakeFiles/pool.dir/pool/pool.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/pool -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/pool.dir/pool/pool.c.o -c /home/adrien/Bureau/games/pool/pool.c",
+  "file": "/home/adrien/Bureau/games/pool/pool.c",
+  "output": "CMakeFiles/pool.dir/pool/pool.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Desktop/games/pool -I/home/adrien/Desktop/games/shared -I/home/adrien/Desktop/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/pool.dir/shared/utils.c.o -c /home/adrien/Desktop/games/shared/utils.c",
-  "file": "/home/adrien/Desktop/games/shared/utils.c",
-  "output": "/home/adrien/Desktop/games/build/CMakeFiles/pool.dir/shared/utils.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/pool -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/pool.dir/shared/utils.c.o -c /home/adrien/Bureau/games/shared/utils.c",
+  "file": "/home/adrien/Bureau/games/shared/utils.c",
+  "output": "CMakeFiles/pool.dir/shared/utils.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Desktop/games/trigo -I/home/adrien/Desktop/games/shared -I/home/adrien/Desktop/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/trigo.dir/trigo/trigo.c.o -c /home/adrien/Desktop/games/trigo/trigo.c",
-  "file": "/home/adrien/Desktop/games/trigo/trigo.c",
-  "output": "/home/adrien/Desktop/games/build/CMakeFiles/trigo.dir/trigo/trigo.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/trigo -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/trigo.dir/trigo/trigo.c.o -c /home/adrien/Bureau/games/trigo/trigo.c",
+  "file": "/home/adrien/Bureau/games/trigo/trigo.c",
+  "output": "CMakeFiles/trigo.dir/trigo/trigo.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Desktop/games/trigo -I/home/adrien/Desktop/games/shared -I/home/adrien/Desktop/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/trigo.dir/shared/utils.c.o -c /home/adrien/Desktop/games/shared/utils.c",
-  "file": "/home/adrien/Desktop/games/shared/utils.c",
-  "output": "/home/adrien/Desktop/games/build/CMakeFiles/trigo.dir/shared/utils.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/trigo -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/trigo.dir/shared/utils.c.o -c /home/adrien/Bureau/games/shared/utils.c",
+  "file": "/home/adrien/Bureau/games/shared/utils.c",
+  "output": "CMakeFiles/trigo.dir/shared/utils.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -Draycaster_plugin_EXPORTS -I/home/adrien/Desktop/games/raycaster -I/home/adrien/Desktop/games/shared -I/home/adrien/Desktop/games/build/_deps/raylib-src/src -g -std=gnu99 -fPIC -o CMakeFiles/raycaster_plugin.dir/raycaster/plugin.c.o -c /home/adrien/Desktop/games/raycaster/plugin.c",
-  "file": "/home/adrien/Desktop/games/raycaster/plugin.c",
-  "output": "/home/adrien/Desktop/games/build/CMakeFiles/raycaster_plugin.dir/raycaster/plugin.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -Draycaster_plugin_EXPORTS -I/home/adrien/Bureau/games/raycaster -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -fPIC -o CMakeFiles/raycaster_plugin.dir/raycaster/plugin.c.o -c /home/adrien/Bureau/games/raycaster/plugin.c",
+  "file": "/home/adrien/Bureau/games/raycaster/plugin.c",
+  "output": "CMakeFiles/raycaster_plugin.dir/raycaster/plugin.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Desktop/games/raycaster -I/home/adrien/Desktop/games/shared -I/home/adrien/Desktop/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/raycaster.dir/raycaster/raycaster.c.o -c /home/adrien/Desktop/games/raycaster/raycaster.c",
-  "file": "/home/adrien/Desktop/games/raycaster/raycaster.c",
-  "output": "/home/adrien/Desktop/games/build/CMakeFiles/raycaster.dir/raycaster/raycaster.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/raycaster -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/raycaster.dir/raycaster/raycaster.c.o -c /home/adrien/Bureau/games/raycaster/raycaster.c",
+  "file": "/home/adrien/Bureau/games/raycaster/raycaster.c",
+  "output": "CMakeFiles/raycaster.dir/raycaster/raycaster.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Desktop/games/raycaster -I/home/adrien/Desktop/games/shared -I/home/adrien/Desktop/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/raycaster.dir/shared/utils.c.o -c /home/adrien/Desktop/games/shared/utils.c",
-  "file": "/home/adrien/Desktop/games/shared/utils.c",
-  "output": "/home/adrien/Desktop/games/build/CMakeFiles/raycaster.dir/shared/utils.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/raycaster -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/raycaster.dir/shared/utils.c.o -c /home/adrien/Bureau/games/shared/utils.c",
+  "file": "/home/adrien/Bureau/games/shared/utils.c",
+  "output": "CMakeFiles/raycaster.dir/shared/utils.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Desktop/games/raycaster -I/home/adrien/Desktop/games/shared -I/home/adrien/Desktop/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/raycaster.dir/shared/hotreload.c.o -c /home/adrien/Desktop/games/shared/hotreload.c",
-  "file": "/home/adrien/Desktop/games/shared/hotreload.c",
-  "output": "/home/adrien/Desktop/games/build/CMakeFiles/raycaster.dir/shared/hotreload.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/adrien/Bureau/games/raycaster -I/home/adrien/Bureau/games/shared -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -g -std=gnu99 -o CMakeFiles/raycaster.dir/shared/hotreload.c.o -c /home/adrien/Bureau/games/shared/hotreload.c",
+  "file": "/home/adrien/Bureau/games/shared/hotreload.c",
+  "output": "CMakeFiles/raycaster.dir/shared/hotreload.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -DBUILD_LIBTYPE_SHARED -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -D_GLFW_X11 -Draylib_EXPORTS -I/home/adrien/Desktop/games/build/_deps/raylib-src/src -isystem /home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/include -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=gnu99 -fPIC -fvisibility=hidden -o _deps/raylib-build/raylib/CMakeFiles/raylib.dir/rcore.c.o -c /home/adrien/Desktop/games/build/_deps/raylib-src/src/rcore.c",
-  "file": "/home/adrien/Desktop/games/build/_deps/raylib-src/src/rcore.c",
-  "output": "/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/CMakeFiles/raylib.dir/rcore.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -DBUILD_LIBTYPE_SHARED -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -D_GLFW_X11 -Draylib_EXPORTS -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -isystem /home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/include -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=gnu99 -fPIC -fvisibility=hidden -o _deps/raylib-build/raylib/CMakeFiles/raylib.dir/rcore.c.o -c /home/adrien/Bureau/games/build/_deps/raylib-src/src/rcore.c",
+  "file": "/home/adrien/Bureau/games/build/_deps/raylib-src/src/rcore.c",
+  "output": "_deps/raylib-build/raylib/CMakeFiles/raylib.dir/rcore.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -DBUILD_LIBTYPE_SHARED -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -D_GLFW_X11 -Draylib_EXPORTS -I/home/adrien/Desktop/games/build/_deps/raylib-src/src -isystem /home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/include -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=gnu99 -fPIC -fvisibility=hidden -o _deps/raylib-build/raylib/CMakeFiles/raylib.dir/rshapes.c.o -c /home/adrien/Desktop/games/build/_deps/raylib-src/src/rshapes.c",
-  "file": "/home/adrien/Desktop/games/build/_deps/raylib-src/src/rshapes.c",
-  "output": "/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/CMakeFiles/raylib.dir/rshapes.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -DBUILD_LIBTYPE_SHARED -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -D_GLFW_X11 -Draylib_EXPORTS -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -isystem /home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/include -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=gnu99 -fPIC -fvisibility=hidden -o _deps/raylib-build/raylib/CMakeFiles/raylib.dir/rshapes.c.o -c /home/adrien/Bureau/games/build/_deps/raylib-src/src/rshapes.c",
+  "file": "/home/adrien/Bureau/games/build/_deps/raylib-src/src/rshapes.c",
+  "output": "_deps/raylib-build/raylib/CMakeFiles/raylib.dir/rshapes.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -DBUILD_LIBTYPE_SHARED -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -D_GLFW_X11 -Draylib_EXPORTS -I/home/adrien/Desktop/games/build/_deps/raylib-src/src -isystem /home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/include -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=gnu99 -fPIC -fvisibility=hidden -o _deps/raylib-build/raylib/CMakeFiles/raylib.dir/rtext.c.o -c /home/adrien/Desktop/games/build/_deps/raylib-src/src/rtext.c",
-  "file": "/home/adrien/Desktop/games/build/_deps/raylib-src/src/rtext.c",
-  "output": "/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/CMakeFiles/raylib.dir/rtext.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -DBUILD_LIBTYPE_SHARED -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -D_GLFW_X11 -Draylib_EXPORTS -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -isystem /home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/include -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=gnu99 -fPIC -fvisibility=hidden -o _deps/raylib-build/raylib/CMakeFiles/raylib.dir/rtext.c.o -c /home/adrien/Bureau/games/build/_deps/raylib-src/src/rtext.c",
+  "file": "/home/adrien/Bureau/games/build/_deps/raylib-src/src/rtext.c",
+  "output": "_deps/raylib-build/raylib/CMakeFiles/raylib.dir/rtext.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -DBUILD_LIBTYPE_SHARED -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -D_GLFW_X11 -Draylib_EXPORTS -I/home/adrien/Desktop/games/build/_deps/raylib-src/src -isystem /home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/include -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=gnu99 -fPIC -fvisibility=hidden -o _deps/raylib-build/raylib/CMakeFiles/raylib.dir/rtextures.c.o -c /home/adrien/Desktop/games/build/_deps/raylib-src/src/rtextures.c",
-  "file": "/home/adrien/Desktop/games/build/_deps/raylib-src/src/rtextures.c",
-  "output": "/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/CMakeFiles/raylib.dir/rtextures.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -DBUILD_LIBTYPE_SHARED -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -D_GLFW_X11 -Draylib_EXPORTS -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -isystem /home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/include -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=gnu99 -fPIC -fvisibility=hidden -o _deps/raylib-build/raylib/CMakeFiles/raylib.dir/rtextures.c.o -c /home/adrien/Bureau/games/build/_deps/raylib-src/src/rtextures.c",
+  "file": "/home/adrien/Bureau/games/build/_deps/raylib-src/src/rtextures.c",
+  "output": "_deps/raylib-build/raylib/CMakeFiles/raylib.dir/rtextures.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -DBUILD_LIBTYPE_SHARED -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -D_GLFW_X11 -Draylib_EXPORTS -I/home/adrien/Desktop/games/build/_deps/raylib-src/src -isystem /home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/include -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=gnu99 -fPIC -fvisibility=hidden -o _deps/raylib-build/raylib/CMakeFiles/raylib.dir/raudio.c.o -c /home/adrien/Desktop/games/build/_deps/raylib-src/src/raudio.c",
-  "file": "/home/adrien/Desktop/games/build/_deps/raylib-src/src/raudio.c",
-  "output": "/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/CMakeFiles/raylib.dir/raudio.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -DBUILD_LIBTYPE_SHARED -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -D_GLFW_X11 -Draylib_EXPORTS -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -isystem /home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/include -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=gnu99 -fPIC -fvisibility=hidden -o _deps/raylib-build/raylib/CMakeFiles/raylib.dir/raudio.c.o -c /home/adrien/Bureau/games/build/_deps/raylib-src/src/raudio.c",
+  "file": "/home/adrien/Bureau/games/build/_deps/raylib-src/src/raudio.c",
+  "output": "_deps/raylib-build/raylib/CMakeFiles/raylib.dir/raudio.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -DBUILD_LIBTYPE_SHARED -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -D_GLFW_X11 -Draylib_EXPORTS -I/home/adrien/Desktop/games/build/_deps/raylib-src/src -isystem /home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/include -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=gnu99 -fPIC -fvisibility=hidden -o _deps/raylib-build/raylib/CMakeFiles/raylib.dir/rmodels.c.o -c /home/adrien/Desktop/games/build/_deps/raylib-src/src/rmodels.c",
-  "file": "/home/adrien/Desktop/games/build/_deps/raylib-src/src/rmodels.c",
-  "output": "/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/CMakeFiles/raylib.dir/rmodels.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -DBUILD_LIBTYPE_SHARED -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -D_GLFW_X11 -Draylib_EXPORTS -I/home/adrien/Bureau/games/build/_deps/raylib-src/src -isystem /home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/include -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=gnu99 -fPIC -fvisibility=hidden -o _deps/raylib-build/raylib/CMakeFiles/raylib.dir/rmodels.c.o -c /home/adrien/Bureau/games/build/_deps/raylib-src/src/rmodels.c",
+  "file": "/home/adrien/Bureau/games/build/_deps/raylib-src/src/rmodels.c",
+  "output": "_deps/raylib-build/raylib/CMakeFiles/raylib.dir/rmodels.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/context.c.o -c /home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/context.c",
-  "file": "/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/context.c",
-  "output": "/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/context.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Bureau/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/context.c.o -c /home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/context.c",
+  "file": "/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/context.c",
+  "output": "_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/context.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/init.c.o -c /home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/init.c",
-  "file": "/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/init.c",
-  "output": "/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/init.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Bureau/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/init.c.o -c /home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/init.c",
+  "file": "/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/init.c",
+  "output": "_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/init.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/input.c.o -c /home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/input.c",
-  "file": "/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/input.c",
-  "output": "/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/input.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Bureau/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/input.c.o -c /home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/input.c",
+  "file": "/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/input.c",
+  "output": "_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/input.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/monitor.c.o -c /home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/monitor.c",
-  "file": "/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/monitor.c",
-  "output": "/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/monitor.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Bureau/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/monitor.c.o -c /home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/monitor.c",
+  "file": "/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/monitor.c",
+  "output": "_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/monitor.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/platform.c.o -c /home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/platform.c",
-  "file": "/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/platform.c",
-  "output": "/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/platform.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Bureau/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/platform.c.o -c /home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/platform.c",
+  "file": "/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/platform.c",
+  "output": "_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/platform.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/vulkan.c.o -c /home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/vulkan.c",
-  "file": "/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/vulkan.c",
-  "output": "/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/vulkan.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Bureau/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/vulkan.c.o -c /home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/vulkan.c",
+  "file": "/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/vulkan.c",
+  "output": "_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/vulkan.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/window.c.o -c /home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/window.c",
-  "file": "/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/window.c",
-  "output": "/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/window.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Bureau/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/window.c.o -c /home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/window.c",
+  "file": "/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/window.c",
+  "output": "_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/window.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/egl_context.c.o -c /home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/egl_context.c",
-  "file": "/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/egl_context.c",
-  "output": "/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/egl_context.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Bureau/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/egl_context.c.o -c /home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/egl_context.c",
+  "file": "/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/egl_context.c",
+  "output": "_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/egl_context.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/osmesa_context.c.o -c /home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/osmesa_context.c",
-  "file": "/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/osmesa_context.c",
-  "output": "/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/osmesa_context.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Bureau/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/osmesa_context.c.o -c /home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/osmesa_context.c",
+  "file": "/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/osmesa_context.c",
+  "output": "_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/osmesa_context.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_init.c.o -c /home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/null_init.c",
-  "file": "/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/null_init.c",
-  "output": "/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_init.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Bureau/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_init.c.o -c /home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/null_init.c",
+  "file": "/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/null_init.c",
+  "output": "_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_init.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_monitor.c.o -c /home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/null_monitor.c",
-  "file": "/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/null_monitor.c",
-  "output": "/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_monitor.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Bureau/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_monitor.c.o -c /home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/null_monitor.c",
+  "file": "/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/null_monitor.c",
+  "output": "_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_monitor.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_window.c.o -c /home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/null_window.c",
-  "file": "/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/null_window.c",
-  "output": "/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_window.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Bureau/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_window.c.o -c /home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/null_window.c",
+  "file": "/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/null_window.c",
+  "output": "_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_window.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_joystick.c.o -c /home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/null_joystick.c",
-  "file": "/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/null_joystick.c",
-  "output": "/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_joystick.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Bureau/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_joystick.c.o -c /home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/null_joystick.c",
+  "file": "/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/null_joystick.c",
+  "output": "_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_joystick.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_module.c.o -c /home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/posix_module.c",
-  "file": "/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/posix_module.c",
-  "output": "/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_module.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Bureau/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_module.c.o -c /home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/posix_module.c",
+  "file": "/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/posix_module.c",
+  "output": "_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_module.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_time.c.o -c /home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/posix_time.c",
-  "file": "/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/posix_time.c",
-  "output": "/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_time.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Bureau/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_time.c.o -c /home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/posix_time.c",
+  "file": "/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/posix_time.c",
+  "output": "_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_time.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_thread.c.o -c /home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/posix_thread.c",
-  "file": "/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/posix_thread.c",
-  "output": "/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_thread.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Bureau/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_thread.c.o -c /home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/posix_thread.c",
+  "file": "/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/posix_thread.c",
+  "output": "_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_thread.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_init.c.o -c /home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/x11_init.c",
-  "file": "/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/x11_init.c",
-  "output": "/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_init.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Bureau/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_init.c.o -c /home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/x11_init.c",
+  "file": "/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/x11_init.c",
+  "output": "_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_init.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_monitor.c.o -c /home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/x11_monitor.c",
-  "file": "/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/x11_monitor.c",
-  "output": "/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_monitor.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Bureau/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_monitor.c.o -c /home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/x11_monitor.c",
+  "file": "/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/x11_monitor.c",
+  "output": "_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_monitor.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_window.c.o -c /home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/x11_window.c",
-  "file": "/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/x11_window.c",
-  "output": "/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_window.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Bureau/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_window.c.o -c /home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/x11_window.c",
+  "file": "/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/x11_window.c",
+  "output": "_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_window.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/xkb_unicode.c.o -c /home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/xkb_unicode.c",
-  "file": "/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/xkb_unicode.c",
-  "output": "/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/xkb_unicode.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Bureau/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/xkb_unicode.c.o -c /home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/xkb_unicode.c",
+  "file": "/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/xkb_unicode.c",
+  "output": "_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/xkb_unicode.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/glx_context.c.o -c /home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/glx_context.c",
-  "file": "/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/glx_context.c",
-  "output": "/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/glx_context.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Bureau/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/glx_context.c.o -c /home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/glx_context.c",
+  "file": "/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/glx_context.c",
+  "output": "_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/glx_context.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/linux_joystick.c.o -c /home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/linux_joystick.c",
-  "file": "/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/linux_joystick.c",
-  "output": "/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/linux_joystick.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Bureau/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/linux_joystick.c.o -c /home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/linux_joystick.c",
+  "file": "/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/linux_joystick.c",
+  "output": "_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/linux_joystick.c.o"
 },
 {
-  "directory": "/home/adrien/Desktop/games/build",
-  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_poll.c.o -c /home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/posix_poll.c",
-  "file": "/home/adrien/Desktop/games/build/_deps/raylib-src/src/external/glfw/src/posix_poll.c",
-  "output": "/home/adrien/Desktop/games/build/_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_poll.c.o"
+  "directory": "/home/adrien/Bureau/games/build",
+  "command": "/usr/bin/gcc -D_DEFAULT_SOURCE -D_GLFW_X11 -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/include -I/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src -I/home/adrien/Bureau/games/build/_deps/raylib-build/raylib/external/glfw/src -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -g -std=c99 -fPIC -fvisibility=hidden -Wall -o _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_poll.c.o -c /home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/posix_poll.c",
+  "file": "/home/adrien/Bureau/games/build/_deps/raylib-src/src/external/glfw/src/posix_poll.c",
+  "output": "_deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_poll.c.o"
 }
 ]

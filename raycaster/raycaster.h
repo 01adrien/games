@@ -38,7 +38,7 @@ typedef enum tileType
 } TileType;
 
 Color WALL_LIGHT = {245, 242, 235, 255};
-Color WALL_SHADOW = {155, 120, 100, 255};
+Color WALL_SHADOW = {155, 80, 80, 255};
 Color FOV_COLOR = {255, 215, 0, 5};
 
 typedef enum playerDirection
