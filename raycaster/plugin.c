@@ -60,14 +60,18 @@ TileType getMapTile(TileIndex index, GameContext *ctx)
     return (TileType)ctx->map[index.h * MAP_WIDTH + index.w];
 }
 
+bool isWall(TileType tile)
+{
+    return tile > TILE_EMPTY && tile <= TILE_EAGLE;
+}
+
 bool checkColisionPlayer(GameContext *ctx, Vector2 *vel)
 {
-    Rectangle tile;
     Player p = ctx->player;
     Vector2 nextMove = Vector2Add(p.pos, Vector2Scale(p.vel, p.radius + 20));
     TileIndex pTile = posToIndex(nextMove, ctx);
-
-    if (getMapTile(pTile, ctx) > TILE_EMPTY)
+    TileType tile = getMapTile(pTile, ctx);
+    if (isWall(tile))
     {
         // On teste l'axe X et Y pour voir si il y a possibilité de slider contre le mur
         Vector2 checkX = {.x = p.pos.x + p.vel.x * (p.radius + 8), .y = p.pos.y};
@@ -90,28 +94,28 @@ void movePlayer(GameContext *ctx)
     Player *p = &ctx->player;
     p->vel = (Vector2){0, 0};
 
+    if (p->move.rot == ROT_RIGHT)
+        p->angle += PLAYER_ROTATION * ctx->dt;
+
+    else if (p->move.rot == ROT_LEFT)
+        p->angle -= PLAYER_ROTATION * ctx->dt;
+
+    p->dir = Vector2Normalize((Vector2){cosf(p->angle), sinf(p->angle)});
+
     if (p->move.dir == DIR_UP)
         p->vel = p->dir;
 
     else if (p->move.dir == DIR_DOWN)
         p->vel = Vector2Negate(p->dir);
 
-    if (p->move.rot == ROT_RIGHT)
-        p->angle += PLAYER_ROTATION;
-
-    else if (p->move.rot == ROT_LEFT)
-        p->angle -= PLAYER_ROTATION;
-
-    p->dir = Vector2Normalize((Vector2){cosf(p->angle), sinf(p->angle)});
-
-    if (p->move.dir == DIR_NONE)
+    else if (p->move.dir == DIR_NONE)
         return;
 
     Vector2 velSlide = {0, 0};
     if (checkColisionPlayer(ctx, &velSlide))
         p->vel = velSlide;
 
-    p->pos = Vector2Add(p->pos, Vector2Scale(p->vel, PLAYER_SPEED));
+    p->pos = Vector2Add(p->pos, Vector2Scale(p->vel, PLAYER_SPEED * ctx->dt));
 }
 
 bool hitWall(Vector2 startRay, Vector2 endRay, GameContext *ctx, TileType *tile)
@@ -129,7 +133,7 @@ bool hitWall(Vector2 startRay, Vector2 endRay, GameContext *ctx, TileType *tile)
 
     *tile = MAX(t1, t2);
 
-    return t1 > TILE_EMPTY || t2 > TILE_EMPTY;
+    return isWall(t1) || isWall(t2);
 }
 
 RayInfo raycast(GameContext *ctx, float angle)
@@ -201,16 +205,12 @@ void draw(GameContext *ctx)
 
     // DRAW 3D
     memset(&buffer, 0, PLAYER_SCREEN_WIDTH);
-    float start = p.angle - (PLAYER_FOV * 0.5f);
+    float startAngle = p.angle - (PLAYER_FOV * 0.5f);
     Vector2 corner = {.x = p.screen.x + 1, .y = p.screen.y};
-
-    // FLOOR & CEILLING
-    DrawRectangle(0, 0, PLAYER_SCREEN_WIDTH, PLAYER_SCREEN_HEIGHT / 2, BROWN);
-    DrawRectangle(0, PLAYER_SCREEN_HEIGHT / 2, PLAYER_SCREEN_WIDTH, PLAYER_SCREEN_HEIGHT / 2, GRAY);
 
     for (int x = 0; x < PLAYER_SCREEN_WIDTH; x++)
     {
-        float angle = start + ((PLAYER_FOV * x) / PLAYER_SCREEN_WIDTH);
+        float angle = startAngle + ((PLAYER_FOV * x) / PLAYER_SCREEN_WIDTH);
         RayInfo ray = raycast(ctx, angle);
         float h = MIN(ZOOM / ray.length, PLAYER_SCREEN_HEIGHT);
         float gap = (PLAYER_SCREEN_HEIGHT - h) / 2;
@@ -218,8 +218,11 @@ void draw(GameContext *ctx)
         Vector2 end = {.x = start.x, .y = start.y + h};
         Rectangle src = {.x = ray.textureOffset, .y = 0, .width = 1, .height = 64};
         Rectangle dst = {.x = start.x, .y = start.y, .width = 1, .height = h};
+
+        float shade = MAX(.3f, 1.0f - (ray.length / (MAP_WIDTH * TILE_SIZE)));
         Color c = ray.side == -1 ? WALL_SHADOW : WALL_LIGHT;
-        DrawTexturePro(ctx->textures[ray.tile], src, dst, (Vector2){0, 0}, 0, c);
+        Color wallColor = {c.r * shade, c.g * shade, c.b * shade, c.r};
+        DrawTexturePro(ctx->textures[ray.tile], src, dst, (Vector2){0, 0}, 0, wallColor);
         buffer[x] = ray;
     }
 
@@ -247,7 +250,7 @@ void draw(GameContext *ctx)
 
 void gameLoop(GameContext *ctx)
 {
-
+    ctx->dt = GetFrameTime();
     handleInput(ctx);
     movePlayer(ctx);
     draw(ctx);

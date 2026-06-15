@@ -11,8 +11,8 @@
 #define TILE_SIZE 64
 #define MAP_SCALE 0.0625f
 #define PLAYER_RADIUS 50
-#define PLAYER_SPEED 15
-#define PLAYER_ROTATION 0.05
+#define PLAYER_SPEED 300  // pixels / seconde
+#define PLAYER_ROTATION 2 // radians / seconde
 #define PLAYER_FOV (PI / 3)
 #define PLAYER_HIGH 32
 #define WALL_HIGH (PLAYER_HIGH * 2)
@@ -38,7 +38,7 @@ typedef enum tileType
 } TileType;
 
 Color WALL_LIGHT = {245, 242, 235, 255};
-Color WALL_SHADOW = {155, 120, 85, 255};
+Color WALL_SHADOW = {155, 120, 100, 255};
 Color FOV_COLOR = {255, 215, 0, 5};
 
 typedef enum playerDirection
@@ -83,6 +83,7 @@ typedef struct gameContext
     Player player;
     Vector2 mapPos;
     Texture2D textures[TILE_COUNT];
+    float dt;
 } GameContext;
 
 void setupContext(GameContext *ctx);
