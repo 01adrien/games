@@ -211,7 +211,7 @@ void draw(GameContext *ctx)
     {
         float angle = startAngle + ((PLAYER_FOV * x) / PLAYER_SCREEN_WIDTH);
         RayInfo ray = raycast(ctx, angle);
-        float h = MIN(ZOOM / ray.length, PLAYER_SCREEN_HEIGHT);
+        float h = ZOOM / ray.length;
         float gap = (PLAYER_SCREEN_HEIGHT - h) / 2;
         Vector2 start = {.x = corner.x + x, .y = corner.y + gap};
         Vector2 end = {.x = start.x, .y = start.y + h};
@@ -255,7 +255,9 @@ void gameLoop(GameContext *ctx)
     ctx->dt = GetFrameTime();
     handleInput(ctx);
     movePlayer(ctx);
-    draw(ctx);
+    // draw(ctx);
+    Player p = ctx->player;
+    DrawLineV((Vector2){p.screen.x, p.screen.y + PLAYER_SCREEN_HEIGHT / 2}, (Vector2){p.screen.x + PLAYER_SCREEN_WIDTH, p.screen.y + PLAYER_SCREEN_HEIGHT / 2}, BLACK);
 }
 
 int Draw(void *ctx)

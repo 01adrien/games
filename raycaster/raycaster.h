@@ -32,7 +32,7 @@ typedef enum tileType
     TILE_WOOD,
     TILE_COLORSTONE,
     TILE_GREYSTONE,
-    TILE_BRICK,
+    TILE_REDBRICK,
     TILE_EAGLE,
     TILE_COUNT,
 } TileType;
