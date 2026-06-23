@@ -1,7 +1,7 @@
-- fisheye OK
-- fps / speed OK
-- distance shadding OK
+- refacto scale mini map
+- refacto collision player wall
+- refacto raycaster
 - floor casting
-- light ?? 
+- light ??
 - sprites
 - map editor (small)

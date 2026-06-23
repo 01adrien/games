@@ -67,6 +67,7 @@ typedef struct player
     Vector2 pos;
     Vector2 dir;
     Vector2 vel;
+    Vector2 plane;
     float angle;
     int radius;
     Rectangle screen;

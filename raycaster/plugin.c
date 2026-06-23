@@ -102,6 +102,9 @@ void movePlayer(GameContext *ctx)
 
     p->dir = Vector2Normalize((Vector2){cosf(p->angle), sinf(p->angle)});
 
+    Vector2 perp = {-p->dir.y, p->dir.x};
+    p->plane = Vector2Scale(perp, 0.66f);
+
     if (p->move.dir == DIR_UP)
         p->vel = p->dir;
 
@@ -136,7 +139,7 @@ bool hitWall(Vector2 startRay, Vector2 endRay, GameContext *ctx, TileType *tile)
     return isWall(t1) || isWall(t2);
 }
 
-RayInfo raycast(GameContext *ctx, float angle)
+RayInfo raycast(GameContext *ctx, Vector2 rayDir)
 {
     float len;
     int signX, signY;
@@ -144,15 +147,13 @@ RayInfo raycast(GameContext *ctx, float angle)
     Vector2 adjX, adjY, endX, endY, cornerSquare;
     Player *p = &ctx->player;
     TileIndex pTile = posToIndex(p->pos, ctx);
+    float angle = atan2f(rayDir.y, rayDir.x);
 
     // Raycast X
     signX = 1;
     cornerSquare = indexToPos(pTile, ctx);
     endX = p->pos;
-
-    Vector2 dir = {cosf(angle), sinf(angle)};
-
-    if (dir.x >= 0)
+    if (rayDir.x >= 0)
     {
         cornerSquare.x += TILE_SIZE;
         signX = -1;
@@ -167,15 +168,15 @@ RayInfo raycast(GameContext *ctx, float angle)
     }
 
     // Raycast Y
-
     signY = 1;
     cornerSquare = indexToPos(pTile, ctx);
     endY = p->pos;
-    if (dir.y >= 0) // BOTTOM
+    if (rayDir.y >= 0) // BOTTOM
     {
         cornerSquare.y += TILE_SIZE;
         signY = -1;
     }
+
     while (!hitWall(p->pos, endY, ctx, &tileY))
     {
         adjY = (Vector2){.x = p->pos.x, .y = cornerSquare.y};
@@ -188,6 +189,7 @@ RayInfo raycast(GameContext *ctx, float angle)
     float distY = Vector2Length(Vector2Subtract(endY, p->pos));
     float dist = MIN(distX, distY);
 
+    // Avoid fish eye
     float perp = dist * cos(angle - p->angle);
 
     return (RayInfo){
@@ -201,16 +203,16 @@ RayInfo raycast(GameContext *ctx, float angle)
 
 void draw(GameContext *ctx)
 {
+    // DRAW PLAYER 3D VIEW
     Player p = ctx->player;
-
-    // DRAW 3D
-    memset(&buffer, 0, PLAYER_SCREEN_WIDTH);
-    float startAngle = p.angle - (PLAYER_FOV * 0.5f);
     Vector2 corner = {.x = p.screen.x, .y = p.screen.y};
-    for (int x = -1; x < PLAYER_SCREEN_WIDTH + 1; x++)
+
+    for (int x = 0; x < PLAYER_SCREEN_WIDTH; x++)
     {
-        float angle = startAngle + ((PLAYER_FOV * x) / PLAYER_SCREEN_WIDTH);
-        RayInfo ray = raycast(ctx, angle);
+        // camera x = -1 -> 1 for screenWidth
+        float cameraX = 2.0f * x / (float)PLAYER_SCREEN_WIDTH - 1.0f;
+        Vector2 rayDir = Vector2Add(p.dir, Vector2Scale(p.plane, cameraX));
+        RayInfo ray = raycast(ctx, rayDir);
         float h = ZOOM / ray.length;
         float gap = (PLAYER_SCREEN_HEIGHT - h) / 2;
         Vector2 start = {.x = corner.x + x, .y = corner.y + gap};
@@ -218,9 +220,6 @@ void draw(GameContext *ctx)
         Rectangle src = {.x = ray.textureOffset, .y = 0, .width = 1, .height = 64};
         Rectangle dst = {.x = start.x, .y = start.y, .width = 1, .height = h};
 
-        // FLOOR & CEILLING
-        DrawLineEx((Vector2){.x = dst.x, dst.y + dst.height}, (Vector2){.x = dst.x, .y = corner.y + PLAYER_SCREEN_HEIGHT}, 2, Fade(GREEN, .5));
-        DrawLineEx((Vector2){.x = corner.x + x, corner.y}, (Vector2){.x = corner.x + x, .y = corner.y + gap + 1}, 2, Fade(BLUE, .5));
         float shade = MAX(.3f, 1.0f - (ray.length / (10 * TILE_SIZE)));
         Color c = ray.side == -1 ? WALL_LIGHT : WALL_LIGHT;
         Color wallColor = {c.r * shade, c.g * shade, c.b * shade, c.r};
@@ -236,9 +235,7 @@ void draw(GameContext *ctx)
         {
             y = (i * TILE_SIZE + ctx->mapPos.y) * MAP_SCALE;
             x = (j * TILE_SIZE + ctx->mapPos.x) * MAP_SCALE;
-
             TileType tile = (TileType)ctx->map[i * MAP_WIDTH + j];
-
             DrawRectangle(x, y, TILE_SIZE * MAP_SCALE, TILE_SIZE * MAP_SCALE, tile > 0 ? BLACK : RAYWHITE);
         }
     }
@@ -247,7 +244,7 @@ void draw(GameContext *ctx)
     for (size_t i = 0; i < PLAYER_SCREEN_WIDTH; i++)
         DrawLineV(Vector2Scale(p.pos, MAP_SCALE), Vector2Scale(buffer[i].hit, MAP_SCALE), FOV_COLOR);
 
-    DrawCircleV(Vector2Scale(p.pos, MAP_SCALE), PLAYER_RADIUS * MAP_SCALE, Fade(RED, .6));
+    DrawCircleV(Vector2Scale(p.pos, MAP_SCALE), PLAYER_RADIUS * MAP_SCALE, Fade(BLUE, .6));
 }
 
 void gameLoop(GameContext *ctx)
@@ -255,9 +252,7 @@ void gameLoop(GameContext *ctx)
     ctx->dt = GetFrameTime();
     handleInput(ctx);
     movePlayer(ctx);
-    // draw(ctx);
-    Player p = ctx->player;
-    DrawLineV((Vector2){p.screen.x, p.screen.y + PLAYER_SCREEN_HEIGHT / 2}, (Vector2){p.screen.x + PLAYER_SCREEN_WIDTH, p.screen.y + PLAYER_SCREEN_HEIGHT / 2}, BLACK);
+    draw(ctx);
 }
 
 int Draw(void *ctx)
