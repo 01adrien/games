@@ -28,31 +28,43 @@ void handleInput(GameContext *ctx)
         p->move.rot = ROT_RIGHT;
 }
 
-int _posToIndex(float p, float mapCorner)
+Vector2 worldToMini(Vector2 p, GameContext *ctx)
 {
-    int index = (int)((p - mapCorner) / TILE_SIZE);
+    return (Vector2){
+        ctx->mapPos.x + p.x * MAP_SCALE,
+        ctx->mapPos.y + p.y * MAP_SCALE,
+    };
+}
+
+int _posToIndex(float p)
+{
+    int index = (int)(p / TILE_SIZE);
     if (index < 0)
         index = 0;
-    else if (index > MAP_HEIGHT)
-        index = MAP_HEIGHT - 1;
-    else if (index > MAP_WIDTH)
-        index = MAP_WIDTH - 1;
+    else if (index >= MAP_SIZE)
+        index = MAP_SIZE - 1;
     return index;
 }
 
-float _indexToPos(int n, float mapCorner)
+TileIndex posToIndex(Vector2 pos)
 {
-    return n * TILE_SIZE + mapCorner;
+    return (TileIndex){
+        .w = _posToIndex(pos.x),
+        .h = _posToIndex(pos.y),
+    };
 }
 
-Vector2 indexToPos(TileIndex index, GameContext *ctx)
+float _indexToPos(int n)
 {
-    return (Vector2){.x = _indexToPos(index.w, ctx->mapPos.x), .y = _indexToPos(index.h, ctx->mapPos.y)};
+    return n * TILE_SIZE;
 }
 
-TileIndex posToIndex(Vector2 pos, GameContext *ctx)
+Vector2 indexToPos(TileIndex index)
 {
-    return (TileIndex){.w = _posToIndex(pos.x, ctx->mapPos.x), .h = _posToIndex(pos.y, ctx->mapPos.y)};
+    return (Vector2){
+        .x = _indexToPos(index.w),
+        .y = _indexToPos(index.h),
+    };
 }
 
 TileType getMapTile(TileIndex index, GameContext *ctx)
@@ -69,15 +81,15 @@ bool checkColisionPlayer(GameContext *ctx, Vector2 *vel)
 {
     Player p = ctx->player;
     Vector2 nextMove = Vector2Add(p.pos, Vector2Scale(p.vel, p.radius + 20));
-    TileIndex pTile = posToIndex(nextMove, ctx);
+    TileIndex pTile = posToIndex(nextMove);
     TileType tile = getMapTile(pTile, ctx);
     if (isWall(tile))
     {
         // On teste l'axe X et Y pour voir si il y a possibilité de slider contre le mur
         Vector2 checkX = {.x = p.pos.x + p.vel.x * (p.radius + 8), .y = p.pos.y};
         Vector2 checkY = {.x = p.pos.x, .y = p.pos.y + p.vel.y * (p.radius + 8)};
-        TileIndex pTileX = posToIndex(checkX, ctx);
-        TileIndex pTileY = posToIndex(checkY, ctx);
+        TileIndex pTileX = posToIndex(checkX);
+        TileIndex pTileY = posToIndex(checkY);
 
         if (getMapTile(pTileX, ctx) == TILE_EMPTY)
             *vel = Vector2Normalize(Vector2Subtract(checkX, p.pos));
@@ -123,8 +135,8 @@ void movePlayer(GameContext *ctx)
 
 bool hitWall(Vector2 startRay, Vector2 endRay, GameContext *ctx, TileType *tile)
 {
-    TileIndex current = posToIndex(endRay, ctx);
-    Vector2 tilePos = indexToPos(current, ctx);
+    TileIndex current = posToIndex(endRay);
+    Vector2 tilePos = indexToPos(current);
 
     TileIndex frontier = {
         .h = tilePos.y == endRay.y ? current.h - 1 : current.h,
@@ -136,7 +148,7 @@ bool hitWall(Vector2 startRay, Vector2 endRay, GameContext *ctx, TileType *tile)
 
     *tile = MAX(t1, t2);
 
-    return isWall(t1) || isWall(t2);
+    return isWall(*tile);
 }
 
 RayInfo raycast(GameContext *ctx, Vector2 rayDir)
@@ -146,43 +158,49 @@ RayInfo raycast(GameContext *ctx, Vector2 rayDir)
     TileType tileX, tileY;
     Vector2 adjX, adjY, endX, endY, cornerSquare;
     Player *p = &ctx->player;
-    TileIndex pTile = posToIndex(p->pos, ctx);
+    TileIndex pTile = posToIndex(p->pos);
     float angle = atan2f(rayDir.y, rayDir.x);
-
-    // Raycast X
-    signX = 1;
-    cornerSquare = indexToPos(pTile, ctx);
+    // X intersections
+    cornerSquare = indexToPos(pTile);
     endX = p->pos;
+
+    // gauche ou droite
     if (rayDir.x >= 0)
-    {
         cornerSquare.x += TILE_SIZE;
-        signX = -1;
-    }
 
     while (!hitWall(p->pos, endX, ctx, &tileX))
     {
-        adjX = (Vector2){.x = cornerSquare.x, .y = p->pos.y};
-        len = Vector2Length(Vector2Subtract(p->pos, adjX));
-        endX = (Vector2){.x = cornerSquare.x, .y = adjX.y - (tanf(angle * signX) * len)};
-        cornerSquare.x += (-signX) * TILE_SIZE;
+        // Distance horizontale entre le joueur et la ligne verticale actuellement testée.
+        float dx = cornerSquare.x - p->pos.x;
+        // coef directeur / pente de la droite
+        float coef = (rayDir.y / rayDir.x);
+        endX = (Vector2){
+            .x = cornerSquare.x,
+            // Application de la pente du rayon pour retrouver Y.
+            .y = p->pos.y + dx * coef,
+
+        };
+
+        cornerSquare.x += rayDir.x >= 0 ? TILE_SIZE : -TILE_SIZE;
     }
 
-    // Raycast Y
-    signY = 1;
-    cornerSquare = indexToPos(pTile, ctx);
+    // Y intersections
+    cornerSquare = indexToPos(pTile);
     endY = p->pos;
-    if (rayDir.y >= 0) // BOTTOM
-    {
+
+    // Haut ou bas
+    if (rayDir.y >= 0)
         cornerSquare.y += TILE_SIZE;
-        signY = -1;
-    }
 
     while (!hitWall(p->pos, endY, ctx, &tileY))
     {
-        adjY = (Vector2){.x = p->pos.x, .y = cornerSquare.y};
-        len = Vector2Length(Vector2Subtract(p->pos, adjY));
-        endY = (Vector2){.x = adjY.x + (tan((angle + PI / 2) * signY) * len), .y = cornerSquare.y};
-        cornerSquare.y += (-signY) * TILE_SIZE;
+        float dy = cornerSquare.y - p->pos.y;
+
+        endY = (Vector2){
+            .x = p->pos.x + dy * (rayDir.x / rayDir.y),
+            .y = cornerSquare.y};
+
+        cornerSquare.y += rayDir.y >= 0 ? TILE_SIZE : -TILE_SIZE;
     }
 
     float distX = Vector2Length(Vector2Subtract(endX, p->pos));
@@ -214,37 +232,44 @@ void draw(GameContext *ctx)
         Vector2 rayDir = Vector2Add(p.dir, Vector2Scale(p.plane, cameraX));
         RayInfo ray = raycast(ctx, rayDir);
         float h = ZOOM / ray.length;
+        buffer[x] = ray;
         float gap = (PLAYER_SCREEN_HEIGHT - h) / 2;
         Vector2 start = {.x = corner.x + x, .y = corner.y + gap};
         Vector2 end = {.x = start.x, .y = start.y + h};
         Rectangle src = {.x = ray.textureOffset, .y = 0, .width = 1, .height = 64};
         Rectangle dst = {.x = start.x, .y = start.y, .width = 1, .height = h};
 
-        float shade = MAX(.3f, 1.0f - (ray.length / (10 * TILE_SIZE)));
+        float shade = MAX(1.0f, 1.0f - (ray.length / (10 * TILE_SIZE)));
         Color c = ray.side == -1 ? WALL_LIGHT : WALL_LIGHT;
         Color wallColor = {c.r * shade, c.g * shade, c.b * shade, c.r};
         DrawTexturePro(ctx->textures[ray.tile], src, dst, (Vector2){0, 0}, 0, wallColor);
-        buffer[x] = ray;
     }
 
     // DRAW MINI MAP
-    int x, y;
     for (size_t i = 0; i < MAP_HEIGHT; i++)
     {
         for (size_t j = 0; j < MAP_WIDTH; j++)
         {
-            y = (i * TILE_SIZE + ctx->mapPos.y) * MAP_SCALE;
-            x = (j * TILE_SIZE + ctx->mapPos.x) * MAP_SCALE;
             TileType tile = (TileType)ctx->map[i * MAP_WIDTH + j];
-            DrawRectangle(x, y, TILE_SIZE * MAP_SCALE, TILE_SIZE * MAP_SCALE, tile > 0 ? BLACK : RAYWHITE);
+            Vector2 v = {.y = i * TILE_SIZE, .x = j * TILE_SIZE};
+            Vector2 p = worldToMini(v, ctx);
+            DrawRectangle(
+                p.x, p.y,
+                TILE_SIZE * MAP_SCALE,
+                TILE_SIZE * MAP_SCALE,
+                tile > 0 ? BLACK : RAYWHITE);
         }
     }
 
     // DRAW PLAYER
-    for (size_t i = 0; i < PLAYER_SCREEN_WIDTH; i++)
-        DrawLineV(Vector2Scale(p.pos, MAP_SCALE), Vector2Scale(buffer[i].hit, MAP_SCALE), FOV_COLOR);
 
-    DrawCircleV(Vector2Scale(p.pos, MAP_SCALE), PLAYER_RADIUS * MAP_SCALE, Fade(BLUE, .6));
+    for (size_t i = 0; i < PLAYER_SCREEN_WIDTH; i++)
+        DrawLineV(
+            worldToMini(p.pos, ctx),
+            worldToMini(buffer[i].hit, ctx),
+            FOV_COLOR);
+
+    DrawCircleV(worldToMini(p.pos, ctx), PLAYER_RADIUS * MAP_SCALE, Fade(BLUE, .6));
 }
 
 void gameLoop(GameContext *ctx)

@@ -6,8 +6,9 @@
 
 #define WIDTH 1000
 #define HEIGHT 600
-#define MAP_WIDTH 24
-#define MAP_HEIGHT 24
+#define MAP_SIZE 24
+#define MAP_WIDTH MAP_SIZE
+#define MAP_HEIGHT MAP_SIZE
 #define TILE_SIZE 64
 #define MAP_SCALE 0.0625f
 #define PLAYER_RADIUS 50
@@ -65,6 +66,7 @@ typedef struct player
 {
     PlayerMove move;
     Vector2 pos;
+    Vector2 gridPos;
     Vector2 dir;
     Vector2 vel;
     Vector2 plane;
